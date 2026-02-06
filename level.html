@@ -3811,7 +3811,7 @@
                 selectedPart = null;
                 return;
             }
-            selectedPart = { id, el };
+            selectedPart = { id, el, sourceId: el.id };
             el.classList.add('selected-item');
         };
 
@@ -3849,7 +3849,7 @@
 
                 if (selectedPart && selectedPart.el) selectedPart.el.classList.remove('selected-item');
 
-                selectedPart = { id: itemId, el: activeDragEl };
+                selectedPart = { id: itemId, el: activeDragEl, sourceId: activeDragEl.id };
                 activeDragEl.classList.add('selected-item');
 
                 // Create ghost
@@ -3930,7 +3930,10 @@
             const mockEv = {
                 preventDefault: () => { },
                 target: slot,
-                dataTransfer: { getData: () => selectedPart.id }
+                currentTarget: slot,
+                dataTransfer: {
+                    getData: (t) => t === 'sourceId' ? selectedPart.sourceId : selectedPart.id
+                }
             };
             dropChariot(mockEv, idx);
             if (selectedPart && selectedPart.el) selectedPart.el.classList.remove('selected-item');
@@ -3942,7 +3945,10 @@
             const mockEv = {
                 preventDefault: () => { },
                 target: slot,
-                dataTransfer: { getData: () => selectedPart.id }
+                currentTarget: slot,
+                dataTransfer: {
+                    getData: (t) => t === 'sourceId' ? selectedPart.sourceId : selectedPart.id
+                }
             };
             dropHierarchy(mockEv, idx, i);
             if (selectedPart && selectedPart.el) selectedPart.el.classList.remove('selected-item');
@@ -3954,7 +3960,10 @@
             const mockEv = {
                 preventDefault: () => { },
                 target: slot,
-                dataTransfer: { getData: () => selectedPart.id }
+                currentTarget: slot,
+                dataTransfer: {
+                    getData: (t) => t === 'sourceId' ? selectedPart.sourceId : selectedPart.id
+                }
             };
             dropLogic(mockEv, idx, i);
             if (selectedPart && selectedPart.el) selectedPart.el.classList.remove('selected-item');
@@ -3966,7 +3975,10 @@
             const mockEv = {
                 preventDefault: () => { },
                 target: slot,
-                dataTransfer: { getData: () => selectedPart.id }
+                currentTarget: slot,
+                dataTransfer: {
+                    getData: (t) => t === 'sourceId' ? selectedPart.sourceId : selectedPart.id
+                }
             };
             dropLandmark(mockEv, idx, lId);
             if (selectedPart && selectedPart.el) selectedPart.el.classList.remove('selected-item');
