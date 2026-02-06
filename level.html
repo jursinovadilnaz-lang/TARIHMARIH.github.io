@@ -1,0 +1,4718 @@
+<!DOCTYPE html>
+<html lang="kk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ТАРИХ: Тапсырма</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Montserrat:wght@400;600;800&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(rgba(10, 25, 45, 0.7), rgba(20, 20, 40, 0.8)), url('OY/фотофон.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-blend-mode: multiply;
+            color: #F5F5DC;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: start;
+            padding-top: 40px;
+            user-select: none;
+            overflow-x: hidden;
+            /* Filter removed to fix position:fixed context */
+        }
+
+        .header-bar {
+            width: 95%;
+            max-width: 850px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 20px;
+            flex-wrap: wrap;
+            padding-right: 120px;
+            /* Space for the fixed score board */
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding-top: 20px;
+            }
+
+            .header-bar {
+                padding-right: 0;
+                justify-content: center;
+                margin-top: 50px;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .era-title {
+                font-size: 1.1rem !important;
+                padding: 8px 15px !important;
+                text-align: center !important;
+            }
+
+            .task-container {
+                width: 95%;
+                gap: 20px;
+            }
+
+            .task-card {
+                padding: 20px !important;
+                border-radius: 15px !important;
+            }
+
+            .task-header h3 {
+                font-size: 1.2rem !important;
+            }
+
+            .task-desc {
+                font-size: 0.95rem !important;
+                margin-bottom: 15px !important;
+            }
+
+            /* Games Grid Item Resize */
+            .game-item {
+                width: 70px !important;
+                height: 70px !important;
+                font-size: 2.2rem !important;
+            }
+
+            /* Fire Game Mobile */
+            .fire-container {
+                height: 250px !important;
+            }
+
+            .fire-meter-container {
+                height: 180px !important;
+            }
+
+            /* Rune Game Mobile */
+            .rune-slot {
+                width: 45px !important;
+                height: 45px !important;
+                font-size: 1.5rem !important;
+            }
+
+            .alpha-key {
+                padding: 8px 12px !important;
+                font-size: 0.8rem;
+            }
+
+            /* Battle Game Mobile */
+            .battle-stage {
+                height: 200px !important;
+            }
+
+            .unit-group {
+                font-size: 1.8rem !important;
+            }
+
+            .command-card {
+                width: 80px !important;
+                padding: 10px !important;
+                font-size: 0.7rem !important;
+            }
+
+            /* Logic Game Mobile */
+            .sequence-area {
+                gap: 15px !important;
+            }
+
+            .logic-slot,
+            .logic-item {
+                width: 65px !important;
+                height: 65px !important;
+            }
+
+            .slots-column,
+            .items-pool {
+                padding: 10px !important;
+                gap: 10px !important;
+            }
+
+            /* Hierarchy Game Mobile */
+            .hierarchy-item {
+                width: 90px !important;
+                height: 70px !important;
+            }
+
+            .hierarchy-item .item-icon {
+                font-size: 1.4rem !important;
+            }
+
+            .slot-label {
+                position: static !important;
+                width: 100% !important;
+                text-align: center !important;
+                margin-bottom: 5px !important;
+            }
+
+            .hierarchy-slot {
+                height: auto !important;
+                min-height: 80px;
+                flex-direction: column !important;
+                padding: 10px !important;
+            }
+
+            /* Court Mobile */
+            .verdict-grid {
+                grid-template-columns: 1fr 1fr !important;
+            }
+
+            .verdict-btn .v-icon {
+                width: 45px !important;
+                height: 45px !important;
+                font-size: 1.5rem !important;
+            }
+
+            /* Architecture Mobile */
+            .arch-map {
+                height: 250px !important;
+                gap: 10px !important;
+            }
+
+            .arch-slot {
+                width: 80px !important;
+                height: 80px !important;
+            }
+
+            .arch-slot::after {
+                font-size: 0.6rem !important;
+                bottom: -25px !important;
+                width: 80px !important;
+            }
+
+            /* Kosh nodes mobile */
+            .kosh-node {
+                width: 180px !important;
+                margin: 0 auto !important;
+                align-self: center !important;
+            }
+
+            .fixed-score {
+                top: 10px;
+                right: 10px;
+                padding: 5px 12px;
+                border-radius: 10px;
+            }
+
+            .fs-label {
+                font-size: 0.6rem;
+                margin-bottom: 0;
+            }
+
+            .fs-value {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* FIXED SCORE DISPLAY (Consistent with game.html) */
+        .fixed-score {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(20, 10, 5, 0.95);
+            border: 2px solid #D4AF37;
+            border-radius: 12px;
+            padding: 10px 20px;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+            backdrop-filter: blur(8px);
+            transition: transform 0.3s ease;
+        }
+
+        .fixed-score:hover {
+            transform: scale(1.05);
+        }
+
+        .fs-label {
+            font-size: 0.75rem;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+        }
+
+        .fs-value {
+            font-size: 1.6rem;
+            font-family: 'Cinzel', serif;
+            font-weight: 800;
+            color: #FFD700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            line-height: 1;
+        }
+
+        .back-btn {
+            background: rgba(30, 20, 15, 0.7);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: #D4AF37;
+            padding: 10px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .back-btn:hover {
+            background: #D4AF37;
+            color: #1a0f0a;
+            border-color: #FFF;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4);
+        }
+
+        .back-btn i {
+            font-size: 1.2rem;
+        }
+
+        .era-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #D4AF37, #FFF, #D4AF37, #FFD700);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite, floatTitle 4s ease-in-out infinite;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+            text-align: right;
+            letter-spacing: 1px;
+            padding: 10px 20px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            backdrop-filter: blur(5px);
+            box-shadow: inset 0 0 15px rgba(212, 175, 55, 0.1);
+        }
+
+        @keyframes floatTitle {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .task-container {
+            width: 90%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            padding-bottom: 150px;
+        }
+
+        .task-card {
+            background: rgba(40, 30, 25, 0.6);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 25px;
+            padding: 35px;
+            position: relative;
+            transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+            opacity: 0.3;
+            filter: grayscale(1) blur(1px);
+            pointer-events: none;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .task-card.active {
+            opacity: 1;
+            filter: grayscale(0) blur(0);
+            pointer-events: auto;
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            box-shadow: 0 0 40px rgba(212, 175, 55, 0.15), 0 20px 60px rgba(0, 0, 0, 0.6);
+            transform: scale(1.03);
+            background: rgba(44, 24, 16, 0.85);
+        }
+
+        .task-card.completed {
+            opacity: 0.6;
+            border-color: #4CAF50;
+            filter: grayscale(0);
+        }
+
+        .task-card.completed::after {
+            content: '✓';
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        .task-header h3 {
+            margin: 0 0 10px 0;
+            color: #FFD700;
+            font-size: 1.5rem;
+        }
+
+        .task-desc {
+            margin-bottom: 25px;
+            line-height: 1.6;
+            color: #ddd;
+            font-size: 1.1rem;
+        }
+
+        /* --- GAME 1: GATHERING (ENHANCED) --- */
+        .items-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .game-item {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(145deg, #3E2723, #2A1B15);
+            border: 3px solid #5D4037;
+            border-radius: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 0 #1a0f0a, 0 10px 20px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .game-item:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 12px 0 #1a0f0a, 0 15px 30px rgba(255, 215, 0, 0.3);
+            border-color: #FFD700;
+        }
+
+        .game-item:active {
+            transform: translateY(-2px) scale(0.98);
+        }
+
+        .game-item.selected {
+            border-color: #4CAF50;
+            background: linear-gradient(145deg, #1B5E20, #2E7D32);
+            transform: scale(0.9) rotate(5deg);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.7), 0 5px 15px rgba(76, 175, 80, 0.5);
+            animation: bounce 0.5s;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: scale(0.9) rotate(5deg);
+            }
+
+            50% {
+                transform: scale(1.1) rotate(-5deg);
+            }
+        }
+
+        .backpack-display {
+            margin-top: 25px;
+            padding: 20px;
+            background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+            border-radius: 15px;
+            border: 2px solid #555;
+            text-align: center;
+            color: #FFD700;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        /* --- GAME 2: FIRE (FIXED TIMING) --- */
+        .fire-stage {
+            height: 400px;
+            background: radial-gradient(circle at center, #2c1e11 0%, #000 70%);
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #3e2723;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .fire-pit {
+            position: absolute;
+            bottom: 20px;
+            width: 140px;
+            height: 40px;
+            background: #111;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #000;
+        }
+
+        .stone-target,
+        .stone-drag {
+            position: absolute;
+            bottom: 50px;
+            background: radial-gradient(circle at 30% 30%, #95a5a6, #7f8c8d, #5a6266);
+            border-radius: 40% 50% 30% 40%;
+            box-shadow: inset -5px -5px 10px rgba(0, 0, 0, 0.5), 10px 10px 20px rgba(0, 0, 0, 0.6);
+            transition: opacity 0.5s;
+        }
+
+        .stone-target {
+            width: 100px;
+            height: 80px;
+            right: 25%;
+            z-index: 2;
+        }
+
+        .stone-drag {
+            width: 90px;
+            height: 70px;
+            left: 25%;
+            cursor: grab;
+            z-index: 10;
+        }
+
+        .stone-drag:active {
+            cursor: grabbing;
+        }
+
+        .fan-tool {
+            position: absolute;
+            bottom: 50px;
+            right: 15%;
+            font-size: 5rem;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+            z-index: 20;
+        }
+
+        .fan-tool:active {
+            transform: rotate(-30deg) scale(0.9);
+        }
+
+        .spark {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #fff;
+            border-radius: 50%;
+            pointer-events: none;
+            box-shadow: 0 0 15px #ff9800, 0 0 25px #ff5722;
+        }
+
+        .fire-overlay {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .video-flame {
+            font-size: 3rem;
+            filter: drop-shadow(0 -10px 30px orangered);
+            animation: flicker 0.15s infinite alternate;
+            transition: font-size 0.5s;
+        }
+
+        @keyframes flicker {
+            0% {
+                opacity: 0.8;
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+        }
+
+        .heat-bar-container {
+            position: absolute;
+            top: 20px;
+            width: 70%;
+            height: 20px;
+            border-radius: 10px;
+            background: #222;
+            border: 2px solid #555;
+            overflow: hidden;
+        }
+
+        .heat-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff9800, #ff5722, #ff1744);
+            transition: width 0.3s;
+            box-shadow: 0 0 20px rgba(255, 152, 0, 0.8);
+        }
+
+        .instruction-hint {
+            position: absolute;
+            top: 50px;
+            width: 100%;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+            text-shadow: 0 2px 4px #000;
+            font-weight: 600;
+        }
+
+        /* --- GAME 3: SCENE (REAL IMAGES + ANIMATIONS) --- */
+        .scenes-container {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .scene-choice {
+            width: 250px;
+            height: 320px;
+            border-radius: 20px;
+            cursor: pointer;
+            position: relative;
+            border: 4px solid #444;
+            transition: all 0.4s;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+        }
+
+        .scene-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.5s, filter 0.5s;
+            /* Aggressive winter effect: desaturate warmth, increase cold tint, high contrast for snow */
+            filter: brightness(1.1) contrast(1.1) saturate(0.2) hue-rotate(-10deg) sepia(0.2) brightness(1.1) drop-shadow(0 0 5px rgba(255, 255, 255, 0.2));
+            /* Overlay a white mist for snowiness */
+            mix-blend-mode: normal;
+        }
+
+        /* Realistic falling snow effect */
+        .snow-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background-image:
+                radial-gradient(circle at 10% 10%, #fff 1px, transparent 1px),
+                radial-gradient(circle at 20% 40%, #fff 1.5px, transparent 1.5px),
+                radial-gradient(circle at 40% 20%, #fff 1px, transparent 1px),
+                radial-gradient(circle at 60% 70%, #fff 2px, transparent 2px),
+                radial-gradient(circle at 80% 30%, #fff 1.5px, transparent 1.5px),
+                radial-gradient(circle at 90% 80%, #fff 1px, transparent 1px);
+            background-size: 200px 300px;
+            animation: snow-fall 8s linear infinite;
+            filter: blur(0.5px);
+            opacity: 0.8;
+        }
+
+        .snow-overlay::after {
+            content: "";
+            position: absolute;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(circle at 15% 15%, #fff 1.2px, transparent 1.2px),
+                radial-gradient(circle at 35% 45%, #fff 1.8px, transparent 1.8px),
+                radial-gradient(circle at 55% 25%, #fff 1.2px, transparent 1.2px),
+                radial-gradient(circle at 75% 75%, #fff 2.2px, transparent 2.2px),
+                radial-gradient(circle at 95% 35%, #fff 1.5px, transparent 1.5px);
+            background-size: 250px 350px;
+            animation: snow-fall 12s linear infinite reverse;
+            opacity: 0.6;
+        }
+
+        @keyframes snow-fall {
+            0% {
+                background-position: 0 0;
+            }
+
+            100% {
+                background-position: 50px 300px;
+            }
+        }
+
+        .scene-choice:hover .scene-bg {
+            transform: scale(1.15);
+            filter: brightness(1.25) contrast(1.15) saturate(1) hue-rotate(-10deg);
+        }
+
+        .scene-choice:hover {
+            border-color: #FFD700;
+            box-shadow: 0 20px 50px rgba(255, 215, 0, 0.5);
+            transform: translateY(-8px) scale(1.02);
+        }
+
+        .scene-choice.correct {
+            border-color: #4CAF50;
+            box-shadow: 0 0 40px rgba(76, 175, 80, 1);
+            animation: pulse 0.6s;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.08);
+            }
+        }
+
+        .scene-choice.wrong {
+            border-color: #e74c3c;
+            animation: shake-wrong 0.6s;
+        }
+
+        @keyframes shake-wrong {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            20%,
+            60% {
+                transform: translateX(-15px);
+            }
+
+            40%,
+            80% {
+                transform: translateX(15px);
+            }
+        }
+
+        .scene-label {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.5), transparent);
+            color: white;
+            text-align: center;
+            font-size: 1.2rem;
+            padding: 20px 10px;
+            font-weight: 700;
+            text-shadow: 0 3px 8px #000;
+            letter-spacing: 0.5px;
+        }
+
+        .scene-info {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            color: #fff;
+            text-shadow: 0 1px 3px #000;
+            line-height: 1.4;
+        }
+
+
+        /* --- GAME 4: CHARIOT BUILDER --- */
+        .chariot-container {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+        }
+
+        .chariot-blueprint {
+            flex: 1;
+            height: 350px;
+            min-width: 400px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            position: relative;
+            background: linear-gradient(rgba(212, 175, 55, 0.05), rgba(0, 0, 0, 0.5));
+        }
+
+        .chariot-parts-bin {
+            width: 150px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .chariot-part {
+            background: #333;
+            border: 2px solid #555;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+            cursor: grab;
+            transition: all 0.3s;
+        }
+
+        .chariot-part:active {
+            cursor: grabbing;
+        }
+
+        .chariot-part:hover:not(.placed) {
+            border-color: #D4AF37;
+            transform: scale(1.05);
+        }
+
+        .chariot-part.placed {
+            opacity: 0.3;
+            pointer-events: none;
+            border-color: #4CAF50;
+        }
+
+        .placed-item {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: drop-shadow(0 0 10px #FFD700);
+        }
+
+        #placed-frame {
+            top: 35%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            font-size: 6rem;
+            z-index: 2;
+        }
+
+        #placed-axle {
+            top: 65%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 50px;
+            border-radius: 25px;
+            background: linear-gradient(180deg, #8B4513, #5D4037);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            z-index: 1;
+            color: transparent;
+            /* Hide text */
+            padding: 0;
+            display: block;
+            /* Ensure box model works */
+        }
+
+        #placed-wheel1 {
+            top: 65%;
+            left: 10%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            font-size: 6rem;
+            z-index: 3;
+        }
+
+        #placed-wheel2 {
+            top: 65%;
+            right: 10%;
+            transform: translate(50%, -50%);
+            width: 100px;
+            height: 100px;
+            font-size: 6rem;
+            z-index: 3;
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulseZone {
+            0% {
+                box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            /* Note: transform logic handles translate */
+            50% {
+                box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+                transform: translate(-50%, -50%) scale(1.05);
+            }
+
+            100% {
+                box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        /* Specific animations need to handle their own transform origins or just use box-shadow pulsing to avoid overwriting transforms */
+        @keyframes glowPulse {
+            0% {
+                box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+                border-color: rgba(255, 215, 0, 0.5);
+            }
+
+            50% {
+                box-shadow: 0 0 25px rgba(255, 215, 0, 0.7);
+                border-color: rgba(255, 215, 0, 1);
+            }
+
+            100% {
+                box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+                border-color: rgba(255, 215, 0, 0.5);
+            }
+        }
+
+        .drop-zone {
+            position: absolute;
+            border: 3px dashed #FFD700;
+            /* Yellow border */
+            border-radius: 50%;
+            background: rgba(255, 215, 0, 0.1);
+            /* Slight yellow tint */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            z-index: 10;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+            /* Glow effect */
+            /* Reset animation to use the simpler one that doesn't mess with transforms */
+            animation: glowPulse 2s infinite ease-in-out;
+            transform-origin: center;
+        }
+
+        .drop-zone.highlight {
+            border-color: #FFF;
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 30px #FFD700;
+            transform: scale(1.1);
+            /* This might conflict with specific position transforms if applied directly, but let's test */
+        }
+
+        /* Specific zone positions */
+        #zone-frame {
+            top: 35%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            border-radius: 15px;
+        }
+
+        #zone-axle {
+            top: 65%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 50px;
+            border-radius: 25px;
+        }
+
+        #zone-wheel1 {
+            top: 65%;
+            left: 10%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+        }
+
+        #zone-wheel2 {
+            top: 65%;
+            right: 10%;
+            transform: translate(50%, -50%);
+            width: 100px;
+            height: 100px;
+        }
+
+        /* --- GAME 5: MIGRATION CYCLE --- */
+        .migration-container {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .cycle-wheel {
+            width: 320px;
+            height: 320px;
+            border: 6px solid #D4AF37;
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            position: relative;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+        }
+
+        .season-slot {
+            width: 80px;
+            height: 80px;
+            border: 2px dashed #D4AF37;
+            border-radius: 50%;
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.6);
+            transition: all 0.3s;
+        }
+
+        .slot-0 {
+            top: 10px;
+            left: 120px;
+        }
+
+        .slot-1 {
+            top: 120px;
+            right: 10px;
+        }
+
+        .slot-2 {
+            bottom: 10px;
+            left: 120px;
+        }
+
+        .slot-3 {
+            top: 120px;
+            left: 10px;
+        }
+
+        .season-chip {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(145deg, #222, #111);
+            border: 2px solid #D4AF37;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .season-chip:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px #D4AF37;
+        }
+
+        .seasons-palette {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .migration-status {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #FFD700;
+            min-height: 24px;
+        }
+
+        .herd-status {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+            border-radius: 15px;
+            border: 2px solid #555;
+            font-size: 1.2rem;
+            color: #FFD700;
+            font-weight: 700;
+        }
+
+        /* --- GAME 6 & 7: PREMIUM MATCHING & TIMELINE --- */
+        .timeline-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            padding: 20px;
+        }
+
+        .timeline-stairway {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+            max-width: 450px;
+            perspective: 1000px;
+        }
+
+        .stair-step {
+            height: 70px;
+            background: rgba(212, 175, 55, 0.05);
+            border: 2px dashed rgba(212, 175, 55, 0.3);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            padding: 0 25px;
+            position: relative;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .stair-step span {
+            position: absolute;
+            left: -40px;
+            font-family: 'Cinzel', serif;
+            color: rgba(212, 175, 55, 0.4);
+            font-size: 1.5rem;
+        }
+
+        .stair-step.filled {
+            background: linear-gradient(90deg, rgba(212, 175, 55, 0.2), transparent);
+            border: 2px solid #D4AF37;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+        }
+
+        .timeline-pool {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .timeline-stone {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            padding: 15px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 5px;
+        }
+
+        .timeline-stone:hover {
+            transform: translateY(-5px) scale(1.05);
+            border-color: #D4AF37;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .timeline-stone .stone-icon {
+            font-size: 1.8rem;
+            filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5));
+        }
+
+        .timeline-stone .stone-text {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .timeline-stone .stone-year {
+            font-size: 0.75rem;
+            color: #D4AF37;
+            font-weight: 800;
+        }
+
+        .petroglyph-symbol,
+        .petroglyph-meaning {
+            padding: 12px;
+            background: rgba(44, 24, 16, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.4s;
+            position: relative;
+            color: #D4AF37;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .petroglyph-symbol:hover,
+        .petroglyph-meaning:hover {
+            border-color: #D4AF37;
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+        }
+
+        .petroglyph-symbol.selected,
+        .petroglyph-meaning.selected {
+            background: rgba(212, 175, 15, 0.3);
+            color: #fff;
+            border-color: #D4AF37;
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+        }
+
+        .petroglyph-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        .symbols-column,
+        .meanings-column {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .petroglyph-symbol {
+            font-size: 2.5rem;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .petroglyph-meaning {
+            font-size: 0.9rem;
+            color: #ddd;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            line-height: 1.3;
+        }
+
+        .petroglyph-symbol.matched,
+        .petroglyph-meaning.matched {
+            border-color: #4CAF50;
+            background: rgba(76, 175, 80, 0.1);
+            pointer-events: none;
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.2);
+        }
+
+        .match-indicator {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5rem;
+            color: #4CAF50;
+        }
+
+        /* --- NEW GAMES STYLES --- */
+
+        /* CHOICE STORY */
+        .choices-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .choice-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #444;
+            padding: 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-align: left;
+        }
+
+        .choice-btn:hover {
+            background: rgba(212, 175, 55, 0.1);
+            border-color: #D4AF37;
+        }
+
+        .choice-btn.correct {
+            border-color: #4CAF50;
+            background: rgba(76, 175, 80, 0.1);
+        }
+
+        .choice-btn.wrong {
+            border-color: #e74c3c;
+            background: rgba(231, 76, 60, 0.1);
+        }
+
+        /* ORDERING */
+        .order-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            min-height: 100px;
+        }
+
+        .order-item {
+            background: #222;
+            border: 2px solid #D4AF37;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: grab;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.2s;
+        }
+
+        .order-item:active {
+            cursor: grabbing;
+            scale: 1.1;
+        }
+
+        /* RUNE DECODE */
+        .rune-grid {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .rune-slot {
+            width: 60px;
+            height: 60px;
+            border: 2px dashed #D4AF37;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #D4AF37;
+        }
+
+        .alphabet-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .alpha-key {
+            background: #333;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* DIPLOMATIC TRADE */
+        .trade-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .guest-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 15px;
+        }
+
+        .gift-options {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* ARTIFACT COLLECTION */
+        .artifact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+        }
+
+        .artifact-item {
+            background: #2a2a2a;
+            border: 1px solid #444;
+            padding: 20px;
+            text-align: center;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .artifact-item.collected {
+            border-color: #D4AF37;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        /* ARCHITECTURE */
+        .arch-map {
+            position: relative;
+            height: 350px;
+            background: rgba(10, 20, 30, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 20px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .arch-slot {
+            width: 110px;
+            height: 110px;
+            border: 2px dashed rgba(212, 175, 55, 0.4);
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: rgba(0, 0, 0, 0.5);
+            transition: all 0.4s;
+        }
+
+        .arch-slot::after {
+            content: attr(data-label);
+            position: absolute;
+            bottom: -35px;
+            width: 140px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #D4AF37;
+            font-weight: bold;
+            opacity: 0.8;
+            line-height: 1.2;
+        }
+
+        .arch-slot.filled {
+            border-style: solid;
+            border-color: #D4AF37;
+            background: rgba(212, 175, 55, 0.1);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+        }
+
+        .landmark-plans {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .landmark-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #444;
+            padding: 15px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            min-width: 100px;
+        }
+
+        .landmark-card:hover {
+            border-color: #D4AF37;
+            transform: translateY(-5px);
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .landmark-card.selected {
+            opacity: 0.3;
+            pointer-events: none;
+            filter: grayscale(1);
+        }
+
+        /* LOGIC SEQUENCE GAME */
+        .logic-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .clues-box {
+            background: #f4e4bc;
+            background-image: url('https://www.transparenttextures.com/patterns/old-map.png'), radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.2) 0%, rgba(0, 0, 0, 0.1) 100%);
+            color: #3e2723;
+            padding: 25px;
+            border-radius: 4px;
+            border: 1px solid #d2b48c;
+            border-left: 8px solid #8b4513;
+            text-align: left;
+            font-family: 'Courier New', Courier, monospace;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
+            position: relative;
+            transform: rotate(-0.5deg);
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .clues-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 1px dashed #8B4513;
+            margin: 5px;
+            pointer-events: none;
+        }
+
+        .clues-box h4 {
+            color: #3e2723 !important;
+            text-transform: uppercase;
+            border-bottom: 2px solid #8B4513;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+
+        .clues-box p {
+            font-weight: bold;
+            line-height: 1.5;
+            margin: 5px 0 !important;
+        }
+
+        .sequence-area {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .slots-column {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background: linear-gradient(#333, #222);
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #555;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .items-pool {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .logic-slot {
+            width: 90px;
+            height: 90px;
+            border: 2px dashed rgba(212, 175, 55, 0.3);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.4);
+            transition: all 0.3s;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .logic-slot:hover {
+            border-color: #D4AF37;
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .logic-item {
+            width: 85px;
+            height: 85px;
+            background: linear-gradient(135deg, #444, #222);
+            border: 2px solid #D4AF37;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: grab;
+            transition: all 0.3s;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+            z-index: 10;
+        }
+
+        .logic-item:active {
+            cursor: grabbing;
+            transform: scale(0.95);
+        }
+
+        /* STRATEGY BUILDER */
+        .strategy-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .strategy-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .strategy-column {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #444;
+        }
+
+        .col-title {
+            text-align: center;
+            color: #D4AF37;
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .col-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .strategy-option {
+            background: #222;
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 10px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .strategy-option:hover {
+            border-color: #888;
+        }
+
+        .strategy-option.selected {
+            border-color: #D4AF37;
+            background: rgba(212, 175, 55, 0.2);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, #D4AF37, #8B6508);
+            border: none;
+            padding: 15px;
+            color: #000;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .action-btn:active {
+            transform: scale(0.95);
+        }
+
+        .action-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* BATTLE COMMANDER */
+        .battle-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .battle-stage {
+            height: 250px;
+            background: linear-gradient(180deg, #5da130 0%, #3e6b1f 100%);
+            border: 4px solid #3e2723;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .unit-group {
+            position: absolute;
+            font-size: 2.5rem;
+            transition: all 1s ease-in-out;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+        }
+
+        .hero-group {
+            top: 40%;
+            left: 20%;
+            transform: scaleX(-1);
+        }
+
+        /* Face right */
+        .enemy-group {
+            top: 40%;
+            right: 20%;
+        }
+
+        .ambush-top {
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: top 1s;
+        }
+
+        .ambush-bottom {
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: bottom 1s;
+        }
+
+        .battle-effect {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            font-size: 5rem;
+            pointer-events: none;
+        }
+
+        .command-deck {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .command-card {
+            background: #222;
+            border: 2px solid #D4AF37;
+            border-radius: 10px;
+            padding: 15px;
+            width: 100px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #fff;
+        }
+
+        .command-card:hover {
+            transform: translateY(-5px);
+            background: #333;
+        }
+
+        .command-card:active {
+            transform: translateY(0);
+        }
+
+        .command-card.done {
+            opacity: 0.5;
+            filter: grayscale(1);
+            pointer-events: none;
+            border-color: #555;
+        }
+
+        /* Battle Animations */
+        @keyframes attackAnim {
+            0% {
+                left: 20%;
+            }
+
+            50% {
+                left: 45%;
+            }
+
+            100% {
+                left: 20%;
+            }
+        }
+
+        @keyframes retreatAnim {
+            0% {
+                left: 20%;
+            }
+
+            100% {
+                left: 5%;
+            }
+        }
+
+        @keyframes enemyAdvance {
+            0% {
+                right: 20%;
+            }
+
+            100% {
+                right: 50%;
+            }
+
+            /* Enemy moves to center */
+        }
+
+        /* ARMY HIERARCHY (TURKIC ERA) */
+        .hierarchy-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+            padding: 20px;
+        }
+
+        .hierarchy-slots {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .hierarchy-slot {
+            height: 90px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(212, 175, 55, 0.2);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .hierarchy-slot.highlight {
+            border-color: #D4AF37;
+            background: rgba(212, 175, 55, 0.1);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+        }
+
+        .slot-label {
+            position: absolute;
+            left: -100px;
+            width: 90px;
+            text-align: right;
+            font-size: 0.75rem;
+            color: #D4AF37;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
+        }
+
+        .hierarchy-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #333, #222);
+            border: 2px solid #D4AF37;
+            border-radius: 12px;
+            padding: 8px;
+            width: 110px;
+            height: 85px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            cursor: grab;
+            transition: all 0.3s;
+            flex-shrink: 0;
+        }
+
+        .hierarchy-item .item-icon {
+            font-size: 1.8rem;
+            line-height: 1;
+        }
+
+        .hierarchy-item .item-name {
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-top: 5px;
+            color: #fff;
+        }
+
+        .hierarchy-item .item-count {
+            font-size: 0.6rem;
+            color: #D4AF37;
+        }
+
+        .hierarchy-slot .hierarchy-item {
+            width: 100%;
+            height: 100%;
+            flex-direction: row;
+            gap: 20px;
+            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .hierarchy-pool {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            width: 100%;
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* KHANATE CEREMONY */
+        .ceremony-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .ceremony-step {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 12px;
+            padding: 18px 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ceremony-step::before {
+            content: '▫️';
+            color: #D4AF37;
+            transition: all 0.3s;
+        }
+
+        .ceremony-step:hover {
+            background: rgba(212, 175, 55, 0.1);
+            transform: translateX(10px);
+            border-color: #D4AF37;
+        }
+
+        .ceremony-step.correct {
+            background: linear-gradient(90deg, #D4AF37, #B8860B);
+            color: black;
+            font-weight: bold;
+            border-color: #FFF;
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+        }
+
+        .ceremony-step.correct::before {
+            content: '👑';
+        }
+
+        .ceremony-step.wrong {
+            border-color: #e74c3c;
+            animation: shake 0.4s;
+        }
+
+        /* JUSTICE COURT (BI'S COURT) */
+        .justice-court-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .law-scroll {
+            background: #f4e4bc;
+            background-image: radial-gradient(circle at 50% 50%, #f4e4bc 0%, #d2b48c 100%);
+            color: #3e2723;
+            padding: 25px;
+            border-radius: 5px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-left: 15px solid #8b4513;
+            border-right: 15px solid #8b4513;
+            width: 90%;
+            max-width: 550px;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        .law-scroll::before,
+        .law-scroll::after {
+            content: '';
+            position: absolute;
+            left: -15px;
+            right: -15px;
+            height: 10px;
+            background: #5d2e0d;
+            border-radius: 5px;
+        }
+
+        .law-scroll::before {
+            top: -5px;
+        }
+
+        .law-scroll::after {
+            bottom: -5px;
+        }
+
+        .verdict-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            width: 100%;
+        }
+
+        .verdict-btn {
+            background: #2a2a2a;
+            border: 2px solid #D4AF37;
+            border-radius: 12px;
+            padding: 15px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            text-align: center;
+        }
+
+        .verdict-btn:hover {
+            background: #3a3a3a;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .verdict-btn .v-icon {
+            font-size: 2rem;
+            background: rgba(212, 175, 55, 0.1);
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 1px solid #D4AF37;
+        }
+
+        .justice-feedback {
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 8px;
+            min-height: 40px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* MIGRATION PATH (KOSH) */
+        .kosh-container {
+            position: relative;
+            padding: 30px 10px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            min-height: 450px;
+        }
+
+        .kosh-line {
+            position: absolute;
+            left: 50%;
+            top: 50px;
+            bottom: 50px;
+            width: 4px;
+            background: rgba(212, 175, 55, 0.1);
+            transform: translateX(-50%);
+            z-index: 0;
+            border-radius: 2px;
+        }
+
+        .kosh-line-progress {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 0%;
+            background: #D4AF37;
+            transition: height 0.6s ease-out;
+            box-shadow: 0 0 15px #D4AF37;
+            border-radius: 2px;
+        }
+
+        .kosh-node {
+            width: 240px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 18px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            /* Zigzag logic */
+            align-self: flex-start;
+            margin-left: 5%;
+        }
+
+        .kosh-node:nth-child(2n+1) {
+            align-self: flex-end;
+            margin-right: 5%;
+            margin-left: 0;
+        }
+
+        .kosh-node:hover {
+            border-color: #D4AF37;
+            background: rgba(212, 175, 55, 0.1);
+            transform: translateY(-5px) scale(1.05);
+        }
+
+        .kosh-node.completed {
+            background: rgba(76, 175, 80, 0.15);
+            border-color: #4CAF50;
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.2);
+        }
+
+        .node-icon {
+            font-size: 2.2rem;
+            background: #222;
+            width: 65px;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 2px solid #D4AF37;
+            transition: all 0.4s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .kosh-node.completed .node-icon {
+            border-color: #4CAF50;
+            background: #4CAF50;
+            color: white;
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
+            transform: rotateY(360deg);
+        }
+
+        .node-content {
+            width: 100%;
+        }
+
+        .node-title {
+            font-weight: bold;
+            color: #D4AF37;
+            margin-bottom: 5px;
+            font-size: 1rem;
+        }
+
+        /* ARCHIVE FACT CHECKER (SOVIET ERA) */
+        .archive-desk {
+            background: #2c3e50;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .archive-folder {
+            background: #e0c5a0;
+            background-image: repeating-linear-gradient(rgba(0, 0, 0, 0.03) 0, rgba(0, 0, 0, 0.03) 1px, transparent 1px, transparent 25px);
+            border: 1px solid #c0a080;
+            border-left: 15px solid #8b4513;
+            padding: 30px 20px;
+            width: 100%;
+            max-width: 440px;
+            min-height: 200px;
+            position: relative;
+            color: #222;
+            font-family: 'Courier New', Courier, monospace;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
+            transform: rotate(-1deg);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-sizing: border-box;
+        }
+
+        .archive-folder::after {
+            content: 'ҚҰПИЯ / SECRET';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: rgba(139, 0, 0, 0.7);
+            border: 3px double rgba(139, 0, 0, 0.7);
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transform: rotate(5deg);
+        }
+
+        .archive-content {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+
+        .archive-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            width: 100%;
+            max-width: 440px;
+            box-sizing: border-box;
+        }
+
+        .archive-btn {
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            font-size: 1rem;
+            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-truth {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-myth {
+            background: #c0392b;
+            color: white;
+        }
+
+        .archive-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
+            filter: brightness(1.1);
+        }
+
+        .archive-btn:active {
+            transform: translateY(2px);
+            box-shadow: none;
+        }
+
+        .stamp-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-15deg) scale(3);
+            font-size: 3rem;
+            font-weight: 900;
+            padding: 10px 30px;
+            border: 10px solid;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 10;
+            text-transform: uppercase;
+        }
+
+        .stamp-truth {
+            color: #1b5e20;
+            border-color: #1b5e20;
+        }
+
+        .stamp-myth {
+            color: #b71c1c;
+            border-color: #b71c1c;
+        }
+
+        @keyframes stampPop {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) rotate(-15deg) scale(3);
+            }
+
+            50% {
+                opacity: 0.8;
+                transform: translate(-50%, -50%) rotate(-15deg) scale(0.9);
+            }
+
+            100% {
+                opacity: 0.7;
+                transform: translate(-50%, -50%) rotate(-15deg) scale(1);
+            }
+        }
+
+        .archive-progress {
+            font-size: 0.9rem;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+
+        .node-info {
+            font-size: 0.8rem;
+            color: #aaa;
+            line-height: 1.4;
+            display: none;
+            /* Only show when completed */
+        }
+
+        .kosh-node.completed .node-info {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hierarchy-item:active {
+            cursor: grabbing;
+            transform: scale(0.95);
+        }
+
+        .gift-btn {
+            transition: all 0.2s;
+        }
+
+        .gift-btn:hover {
+            border-color: #D4AF37 !important;
+            background: #333 !important;
+            transform: translateY(-2px);
+        }
+
+        @keyframes boom {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 1;
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1.5);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(2);
+                opacity: 0;
+            }
+        }
+
+        /* EPIC SUCCESS MODAL */
+        #success-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .epic-title {
+            font-size: 4rem;
+            font-weight: 900;
+            color: #D4AF37;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+            background: linear-gradient(90deg, #D4AF37, #FFF, #D4AF37);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite, epicAppear 1s cubic-bezier(0.17, 0.89, 0.32, 1.49);
+        }
+
+        .epic-subtitle {
+            font-size: 1.5rem;
+            color: #DDD;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.5s forwards;
+        }
+
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        @keyframes epicAppear {
+            0% {
+                transform: scale(0.5) opacity(0);
+                filter: blur(10px);
+            }
+
+            100% {
+                transform: scale(1) opacity(1);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .next-btn {
+            background: linear-gradient(135deg, #FFD700, #B8860B);
+            color: black;
+            padding: 20px 60px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: pulse 2s infinite;
+        }
+
+        .next-btn:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.5);
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.6);
+            }
+
+            70% {
+                box-shadow: 0 0 0 20px rgba(255, 215, 0, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
+            }
+        }
+
+        /* SCORE BOARD */
+        .score-board {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 25px;
+            border-radius: 40px;
+            border: 2px solid rgba(212, 175, 55, 0.6);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.2);
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+
+        .score-board:hover {
+            transform: scale(1.05);
+            border-color: #FFD700;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(212, 175, 55, 0.4);
+        }
+
+        .score-num {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #FFD700;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .points-anim {
+            position: fixed;
+            pointer-events: none;
+            color: #FFD700;
+            font-size: 3rem;
+            font-weight: 900;
+            font-family: 'Cinzel', serif;
+            text-shadow: 0 0 20px #FF7F00, 0 0 40px #FF4500, 0 0 60px #FF0000;
+            z-index: 10000;
+            animation: scoreFire 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        @keyframes scoreFire {
+            0% {
+                transform: translate(-50%, 0) scale(0.2);
+                opacity: 0;
+                filter: blur(20px) brightness(2);
+            }
+
+            30% {
+                opacity: 1;
+                filter: blur(0) brightness(1.5);
+                transform: translate(-50%, -50px) scale(1.3);
+            }
+
+            100% {
+                transform: translate(-50%, -200px) scale(1.8);
+                opacity: 0;
+                filter: blur(30px) brightness(1);
+            }
+        }
+
+        .score-change {
+            animation: scorePop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes scorePop {
+            0% {
+                transform: scale(1);
+                color: #FFD700;
+            }
+
+            50% {
+                transform: scale(1.4);
+                color: #FFF;
+                text-shadow: 0 0 30px #FFD700;
+            }
+
+            100% {
+                transform: scale(1);
+                color: #FFD700;
+            }
+        }
+
+        /* GUIDE / STORYTELLING MODAL - PREMIUM REDESIGN */
+        .guide-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 5000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
+        }
+
+        .guide-box {
+            display: flex;
+            align-items: center;
+            max-width: 800px;
+            width: 90%;
+            position: relative;
+            animation: slideInFade 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .guide-col-char {
+            flex-shrink: 0;
+            z-index: 2;
+            margin-right: -40px;
+            /* Overlap effect */
+            filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.8));
+        }
+
+        .guide-char {
+            width: 220px;
+            height: 220px;
+            background-image: url('aksakal_guide.png');
+            background-size: cover;
+            background-position: top center;
+            border-radius: 50%;
+            border: 4px solid #D4AF37;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3), inset 0 0 20px rgba(0, 0, 0, 0.5);
+            background-color: #1a0f0a;
+            /* Fallback */
+            transition: transform 0.3s ease;
+        }
+
+        .guide-char:hover {
+            transform: scale(1.05) rotate(-2deg);
+        }
+
+        .guide-content {
+            background: linear-gradient(135deg, rgba(30, 20, 15, 0.95), rgba(20, 10, 5, 0.98));
+            border: 2px solid #D4AF37;
+            border-radius: 20px;
+            padding: 30px 40px 30px 60px;
+            /* Extra padding left for overlap */
+            position: relative;
+            flex-grow: 1;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .guide-content::before {
+            /* Decorative border corner */
+            content: '';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            bottom: 10px;
+            left: 10px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 12px;
+            pointer-events: none;
+        }
+
+        .guide-name {
+            color: #FFD700;
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            letter-spacing: 1px;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.2);
+            padding-bottom: 8px;
+            display: inline-block;
+        }
+
+        .guide-text {
+            color: #f0e6d2;
+            font-size: 1.15rem;
+            line-height: 1.7;
+            font-style: italic;
+            margin-bottom: 25px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+        }
+
+        .guide-btn {
+            align-self: flex-end;
+            background: linear-gradient(90deg, #D4AF37, #FFD700);
+            color: #1a0f0a;
+            border: none;
+            padding: 12px 35px;
+            font-weight: 800;
+            font-size: 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+            text-transform: uppercase;
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .guide-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
+            filter: brightness(1.1);
+        }
+
+        @keyframes slideInFade {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 700px) {
+            .guide-box {
+                flex-direction: column;
+                width: 95%;
+            }
+
+            .guide-col-char {
+                margin-right: 0;
+                margin-bottom: -40px;
+                /* Overlap vertical */
+            }
+
+            .guide-char {
+                width: 140px;
+                height: 140px;
+                border-width: 3px;
+            }
+
+            .guide-content {
+                padding: 50px 20px 20px 20px;
+                text-align: center;
+            }
+
+            .guide-btn {
+                align-self: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header-bar">
+        <a href="game.html" class="back-btn"><span>📜</span> Шежіре Картасы</a>
+        <div class="era-title" id="page-title">Дәуір...</div>
+    </div>
+
+    <div class="fixed-score">
+        <div class="fs-label">Жалпы Ұпай</div>
+        <div class="fs-value" id="global-score">0</div>
+    </div>
+
+    <div class="task-container" id="tasks-root"></div>
+
+    <div id="success-modal">
+        <div class="modal-content">
+            <h1 class="epic-title" id="modal-title">Ұлы Жеңіс!</h1>
+            <div id="modal-body">
+                <p class="epic-subtitle" id="modal-desc">Сен тарихтың жаңа парағын аштың. Дәуір сынынан мүдірмей өттің!
+                </p>
+            </div>
+            <div class="achievement-badge" id="achievement-badge" style="display:none; margin-bottom:30px;">
+                <div style="font-size:5rem; filter: drop-shadow(0 0 20px #FFD700);">🏆</div>
+                <div
+                    style="color:#D4AF37; font-family:'Cinzel', serif; font-weight:bold; font-size:1.2rem; margin-top:10px;">
+                    ТАРИХШЫ-ЗЕРТТЕУШІ</div>
+            </div>
+            <button class="next-btn" id="finish-btn" onclick="finishLevel()">📜 Басты бетке оралу</button>
+        </div>
+    </div>
+
+    <!-- GUIDE/STORY MODAL -->
+    <div class="guide-overlay" id="guide-modal">
+        <div class="guide-box">
+            <div class="guide-col-char">
+                <div class="guide-char"></div> <!-- Image set via CSS -->
+            </div>
+            <div class="guide-content">
+                <div class="guide-name" id="guide-name">Абыз Ақсақал</div>
+                <div class="guide-text" id="guide-text">...</div>
+                <button class="guide-btn" onclick="closeGuide()">Түсінікті, бастайық! ➜</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- GUIDE DIALOGUES ---
+        const guideDialogues = {
+            1: "Амансың ба, жас ұрпақ! Бұл – табиғаттың қатал кезеңі. Адамзат алғашқы қадамдарын жасауда. Сенің міндетің – тірі қалу, отты бағындыру және алғашқы баспананы табу. Іске сәт!",
+            2: "Қола дәуіріне қош келдің! Ұлы Дала төсінде металл игеріліп, алғашқы арбалар жасалуда. Біз көшпенді өмірге бет бұрдық. Күйме құрастырып, көш жолын баста!",
+            3: "Заман өзгерді, батырым! Сақтар мен Ғұндардың дәуірі туды. Жауға қарсы тұру үшін айлакерлік пен батылдық керек. «Алтын адам» мұрасын қорғап қал!",
+            4: "Түркі қағанатының заманы! Тасқа қашалған жазулар – біздің тарихымыз. Елшілермен тіл табысып, дипломатия мен білімді ұштастыратын кез келді.",
+            5: "Қазақ хандығының шаңырағы көтерілді! Елдің бірлігі – сенің қолыңда. Хан сайлап, әділ билік жүргіз. Жеті Жарғыны басшылыққа ал!",
+            6: "Зар заман мен жаңғыру кезеңі! Отарлау саясатына қарамастан, Алаш зиялылары ұлт рухын сақтап қалды. Тарихты танып, болашаққа жол сал.",
+            7: "Тәуелсіздік таңы атты! Жаңа Қазақстанды құру – ұлы мәртебе. Елорданы тұрғызып, еліңді әлемге таныт. Болашақ сенің қолыңда!"
+        };
+
+        function showGuide(levelId) {
+            const text = guideDialogues[levelId];
+            if (text) {
+                document.getElementById('guide-text').innerText = text;
+                document.getElementById('guide-modal').style.display = 'flex';
+                // Play sound if available?
+            }
+        }
+
+        function closeGuide() {
+            const modal = document.getElementById('guide-modal');
+            modal.style.animation = 'fadeOut 0.5s';
+            setTimeout(() => {
+                modal.style.display = 'none';
+                modal.style.animation = ''; // Reset
+            }, 500);
+        }
+
+        const gameData = {
+            1: {
+                title: "1-Кезең: Тас Дәуірі",
+                tasks: [
+                    {
+                        type: 'gathering', title: "1. Тірі Қалу Жолы",
+                        desc: "Қоржынға тек тірі қалуға қажетті 3 маңызды затты сал.",
+                        items: [
+                            { id: 1, icon: '🥩', valid: true }, { id: 2, icon: '👑', valid: false },
+                            { id: 3, icon: '🔪', valid: true }, { id: 4, icon: '🧸', valid: false },
+                            { id: 5, icon: '🔥', valid: true }, { id: 6, icon: '📱', valid: false }
+                        ]
+                    },
+                    {
+                        type: 'fire', title: "2. Отты Сақта",
+                        desc: "1. Тасты соғып ұшқын шығар. 2. От тұтанғанда, жапырақпен желпіп маздат!",
+                    },
+                    {
+                        type: 'scene', title: "3. Қоныс Таңдау",
+                        desc: "Қыс келе жатыр. Қай жерде үй тігеміз?",
+                        options: [
+                            {
+                                text: "Өзен жағасы",
+                                info: "Су жақын, балық аулауға ыңғайлы",
+                                image: "winter_river.png",
+                                hasSnow: true,
+                                valid: false
+                            },
+                            {
+                                text: "Тау үңгірі",
+                                info: "Қыстан қорғайды, жел кірмейді",
+                                image: "winter_mountain_cave.png",
+                                hasSnow: true,
+                                valid: true
+                            },
+                            {
+                                text: "Ашық дала",
+                                info: "Кең жер, аң аулауға жақсы",
+                                image: "winter_steppe.png",
+                                hasSnow: true,
+                                valid: false
+                            }
+                        ]
+                    }
+                ]
+            },
+            2: {
+                title: "2-Кезең: Қола Дәуірі және Ерте Көшпенділер",
+                tasks: [
+                    {
+                        type: 'chariot_builder',
+                        title: "1. Дала Күймесін Құрастыр",
+                        desc: "Бөлшектер шатасып кетті! Күймені дұрыс инженерлік ретімен жинаңыз. Абайлаңыз, кейбір бөлшектер мүлдем жарамайды (мыс: шаршы доңғалақ).",
+                        parts: [
+                            { id: 'wheel1', name: 'Оң доңғалақ', icon: '🔘', step: 3, placed: false, valid: true },
+                            { id: 'axle', name: 'Орталық білік', icon: '➖', step: 2, placed: false, valid: true },
+                            { id: 'wrong_wheel', name: 'Шаршы доңғалақ', icon: '🟦', step: 99, placed: false, valid: false },
+                            { id: 'frame', name: 'Күйме негізі', icon: '🟫', step: 1, placed: false, valid: true },
+                            { id: 'wheel2', name: 'Сол доңғалақ', icon: '🔘', step: 3, placed: false, valid: true }
+                        ]
+                    },
+                    {
+                        type: 'migration_cycle',
+                        title: "2. Ұлы Көш Жолы",
+                        desc: "Көш маусымдарын дұрыс циклге (Жаз -> Күз -> Қыс -> Көктем) сәйкес шатастырмай орналастырыңыз.",
+                        seasons: [
+                            { id: 'kokteu', name: 'Көктеу', icon: '🌱', correctPos: 3 },
+                            { id: 'zhailau', name: 'Жайлау', info: 'Жазғы жайылым', icon: '☀️', correctPos: 0 },
+                            { id: 'kystau', name: 'Қыстау', icon: '🛖', correctPos: 2 },
+                            { id: 'kuzdeu', name: 'Күздеу', info: 'Күзгі қоныс', icon: '🍂', correctPos: 1 }
+                        ]
+                    },
+                    {
+                        type: 'petroglyph_matching',
+                        title: "3. Петроглиф Сәйкестендіру",
+                        desc: "Тастағы таңбалардың мағынасын тап.",
+                        pairs: [
+                            { symbol: '🦌', meaning: 'Бұғы - Күннің немесе аспанның белгісі', id: 'deer' },
+                            { symbol: '🏹', meaning: 'Аңшы - Тіршілік көзі', id: 'hunter' },
+                            { symbol: '☀️', meaning: 'Тәңір - Күн құдайы', id: 'god' },
+                            { symbol: '👣', meaning: 'Табан - Қасиетті орын', id: 'feet' },
+                            { symbol: '🐐', meaning: 'Таутеке - Күш пен айбын', id: 'goat' },
+                            { symbol: '👤', meaning: 'Адам - аңшы немесе көшбасшы', id: 'human' }
+                        ]
+                    }
+                ]
+            },
+            3: {
+                title: "3-Кезең: Ерте Темір Дәуірі (Сақтар мен Ғұндар)",
+                tasks: [
+
+                    {
+                        type: 'logic_sequence',
+                        title: "1. Алтын Адамның Құпия Коды",
+                        desc: "Қорғанның есігі жабық! Жеті қат жер асты мен жеті қат аспан арасындағы байланысты тап. Қателес, есік мәңгіге жабылады.",
+                        clues: [
+                            "1. Тәңір (☀️) барлық тіршіліктен биік.",
+                            "2. Жер Ана (⛰️) Тәңірден төмен, бірақ Судан жоғары.",
+                            "3. Су (🌊) Жердің астында ағады.",
+                            "4. Тұлпар (🐎) Тау мен Құстың ортасында.",
+                            "5. Құс (🦅) Күнге ең жақын, бірақ одан төмен."
+                        ],
+                        correctOrder: ['sun', 'bird', 'horse', 'mountain', 'water'],
+                        items: [
+                            { id: 'horse', icon: '🐎', name: 'Тұлпар' },
+                            { id: 'sun', icon: '☀️', name: 'Күн' },
+                            { id: 'mountain', icon: '⛰️', name: 'Тау' },
+                            { id: 'water', icon: '🌊', name: 'Су' },
+                            { id: 'bird', icon: '🦅', name: 'Құс' }
+                        ]
+                    },
+                    {
+                        type: 'strategy_builder',
+                        title: "2. Томирис: Ұлы Шайқас Жоспары",
+                        desc: "Кирдің «өлмес» әскерін жеңу үшін дала заңдарын пайдалан! Жерді, тәсілді және күшті дұрыс таңдап, жеңіс формуласын тап.",
+                        hint: "💡 Кеңес: «Итжығыс» үшін тар жер емес, кеңістік керек. Сақтар жаудан қашқандай болып, оларды тұзаққа түсірген.",
+                        categories: [
+                            {
+                                id: 'terrain',
+                                name: '📍 Ұрыс алаңы',
+                                options: [
+                                    { id: 'river', text: 'Өзен өткелі', icon: '🌊' },
+                                    { id: 'steppe', text: 'Кең дала', icon: '🌾' },
+                                    { id: 'gorge', text: 'Тау шатқалы', icon: '⛰️' }
+                                ]
+                            },
+                            {
+                                id: 'tactic',
+                                name: '⚡ Соғыс тәсілі',
+                                options: [
+                                    { id: 'charge', text: 'Бетпе-бет шабуыл', icon: '⚔️' },
+                                    { id: 'retreat', text: 'Алдамшы шегіну', icon: '🐎' },
+                                    { id: 'ambush', text: 'Түнгі торуыл', icon: '🌑' }
+                                ]
+                            },
+                            {
+                                id: 'unit',
+                                name: '🛡️ Негізгі күш',
+                                options: [
+                                    { id: 'infantry', text: 'Ауыр жаяу әскер', icon: '🛡️' },
+                                    { id: 'archers', text: 'Атты садақшылар', icon: '🏹' },
+                                    { id: 'chariots', text: 'Соғыс арбалары', icon: '🛒' }
+                                ]
+                            }
+                        ],
+                        correctCombo: { terrain: 'steppe', tactic: 'retreat', unit: 'archers' },
+                        feedback: {
+                            success: "Дұрыс! «Итжығыс» әдісі мен «Скифтік шегіну» Кирді тұзаққа түсірді. Атты садақшылар жауды қашықтықтан жойды!",
+                            fail: "Бұл жоспар сәтсіз болды. Парсы әскері басым түсті. Дала тактикасын еске түсір!"
+                        }
+                    },
+                    {
+                        type: 'battle_commander',
+                        title: "3. Ұлы Шайқас Командирі",
+                        desc: "Сен — қолбасшысың! Шайқас барысын басқар. Жауды жеңу үшін бұйрықтарды дұрыс ретпен бер.",
+                        steps: [
+                            { id: 'attack', text: "Жалған Шабуыл", icon: "⚔️", order: 1 },
+                            { id: 'retreat', text: "Алдамшы Шегіну", icon: "🐎", order: 2 },
+                            { id: 'ambush', text: "Қоршауға алу", icon: "🏹", order: 3 }
+                        ]
+                    }
+                ]
+            },
+            4: {
+                title: "4-Кезең: Түркі Дәуірі (Көктүрік қағанаты)",
+                tasks: [
+                    {
+                        type: 'rune_decode',
+                        title: "1. Орхон Жазбалары: Тастағы тарих",
+                        desc: "Көне Түркі елінің өсиетін оқы. Төмендегі руналарды мағынасына қарай дұрыс таңдап, «ТҮРКІ» сөзін құрастыр.",
+                        hint: "Кеңес: 𐰟 = Т, 𐰇 = Ү, 𐰺 = Р, 𐰚 = К, 𐰃 = І. Таңбаларды ретімен бас.",
+                        target: "ТҮРКІ",
+                        alphabet: [
+                            { char: 'Т', rune: '𐰟', name: 'Т (Аспан жазуы)' },
+                            { char: 'Ү', rune: '𐰇', name: 'Ү (Үміт)' },
+                            { char: 'Р', rune: '𐰺', name: 'Р (Рух)' },
+                            { char: 'К', rune: '𐰚', name: 'К (Күш)' },
+                            { char: 'І', rune: '𐰃', name: 'І (Ізгілік)' }
+                        ]
+                    },
+                    {
+                        type: 'diplomatic_trade',
+                        title: "2. Жібек Жолы: Дипломатия сабағы",
+                        desc: "Сен — Қағанат елшісісің. Көрші елдермен одақ құру үшін оларға ең құнды сыйлықтарды таңдаңыз. Абайлаңыз, қате таңдау соғысқа әкелуі мүмкін!",
+                        guests: [
+                            {
+                                name: "Византия Елшісі",
+                                country: "Византия",
+                                avatar: "🏛️🤴",
+                                color: "#8E24AA",
+                                need: "Еуропа мата өндіруді үйренгісі келеді",
+                                correct: "Жібек",
+                                response: "Ұлы Жібек жолы арқылы достығымыз нығая түспек!",
+                                options: [
+                                    { text: "Жібек", icon: "🧣" },
+                                    { text: "Қару", icon: "⚔️" },
+                                    { text: "Мереке", icon: "🎭" }
+                                ]
+                            },
+                            {
+                                name: "Қытай Елшісі",
+                                country: "Қытай",
+                                avatar: "🏮🏯",
+                                color: "#C62828",
+                                need: "Императорға даланың жүйрік жылқылары қажет",
+                                correct: "Пырақ",
+                                response: "Түркі тұлпарлары - әлемдегі ең жүйрік сәйгүліктер!",
+                                options: [
+                                    { text: "Пырақ", icon: "🐎" },
+                                    { text: "Алтын", icon: "💰" },
+                                    { text: "Шәй", icon: "🍃" }
+                                ]
+                            },
+                            {
+                                name: "Соғды Саудагері",
+                                country: "Соғды",
+                                avatar: "🐪👳‍♂️",
+                                color: "#F9A825",
+                                need: "Қауіпсіздік пен еркін сауда жолы керек",
+                                correct: "Мөр",
+                                response: "Сауда керуендері енді қауіпсіз жолға шығады!",
+                                options: [
+                                    { text: "Мөр", icon: "📜" },
+                                    { text: "Тамақ", icon: "🍖" },
+                                    { text: "Ойын", icon: "🎲" }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        type: 'army_hierarchy',
+                        title: "3. Түменбасы: Әскер құрылымы",
+                        desc: "Түркі әскерінің 'Ондық жүйесін' қалпына келтір. Кіші топтан үлкенге қарай бөлшектерді орналастыр.",
+                        correctOrder: ['onbase', 'zhuzbase', 'mynbase', 'tumenbase'],
+                        items: [
+                            { id: 'zhuzbase', name: 'Жүзбасы', count: '100 жауынгер', icon: '🏹' },
+                            { id: 'tumenbase', name: 'Түменбасы', count: '10,000 жауынгер', icon: '🏁' },
+                            { id: 'mynbase', name: 'Мыңбасы', count: '1,000 жауынгер', icon: '⚔️' },
+                            { id: 'onbase', name: 'Онбасы', count: '10 жауынгер', icon: '🏇' }
+                        ]
+                    }
+                ]
+            },
+            5: {
+                title: "5-Кезең: Қазақ Хандығы",
+                tasks: [
+                    {
+                        type: 'ceremony_order',
+                        title: "1. Ақ киізге көтеру",
+                        desc: "Ханды таққа отырғызудың көне дәстүрін дұрыс ретімен орында.",
+                        steps: [
+                            { text: "Сұлтандардың жиналуы", order: 1 },
+                            { text: "Халықтың келісімі", order: 2 },
+                            { text: "Ақ киізге көтеру", order: 3 },
+                            { text: "Ханталапай", order: 4 },
+                            { text: "Шерба салу", order: 5 }
+                        ]
+                    },
+                    {
+                        type: 'justice_court',
+                        title: "2. Билер Соты: Жеті Жарғы",
+                        desc: "Тәуке ханның дана Биі бол. Халықтың арыз-шағымын тыңдап, ата заң бойынша әділ үкім кес!",
+                        cases: [
+                            {
+                                crime: "Көршінің атын ұрлаған ұры ұсталды. Жеті Жарғы бойынша оған қандай жаза тиіс?",
+                                icon: "🐎",
+                                bg: "rgba(139, 69, 19, 0.1)",
+                                options: [
+                                    { text: "Малды 9 есе өтеу (Тоғыз айыбы)", icon: "⚖️", correct: true, info: "Дұрыс! «Тоғыз» айыбы — көшпенділер заңының басты жазасы." },
+                                    { text: "Түрмеге жабу", icon: "⛓️", correct: false, info: "Қате. Қазақ хандығында түрме болмаған." },
+                                    { text: "Қуғындау", icon: "🏇", correct: false, info: "Жеті Жарғы бойынша ең алдымен шығын өтелуі тиіс." }
+                                ]
+                            },
+                            {
+                                crime: "Екі рудың арасында үлкен жайылым жер дауы туды. Ел бірлігін сақтау үшін Би не істеуі керек?",
+                                icon: "🗺️",
+                                bg: "rgba(34, 139, 34, 0.1)",
+                                options: [
+                                    { text: "Бейбіт бітімге шақыру", icon: "🤝", correct: true, info: "Керемет! «Бас кеспек болса да, тіл кеспек жоқ» — Билер елді татуластырған." },
+                                    { text: "Соғысқа рұқсат беру", icon: "⚔️", correct: false, info: "Қате. Билердің міндеті — ел ішіндегі бүлікті тоқтату." },
+                                    { text: "Жерді тартып алу", icon: "🌋", correct: false, info: "Бұл әділетсіздік халық арасында араздық тудырады." }
+                                ]
+                            },
+                            {
+                                crime: "Қақтығыс кезінде бір адам ауыр жарақат алды. «Жеті Жарғы» бойынша кінәлі тарап не істеуі тиіс?",
+                                icon: "🩸",
+                                bg: "rgba(220, 20, 60, 0.1)",
+                                options: [
+                                    { text: "Құн төлеу (Айыппұл)", icon: "💰", correct: true, info: "Дұрыс! Жарақаттың ауырлығына қарай белгілі мөлшерде малмен құн төленген." },
+                                    { text: "Кек алу (Қанға қан)", icon: "🗡️", correct: false, info: "Қате. Билер соты кек алуды тоқтатып, құн төлету арқылы бітім жасаған." },
+                                    { text: "Ешқандай жаза жоқ", icon: "🚫", correct: false, info: "Қате. Кез келген зиян үшін материалдық немесе моральдық өтеу болған." }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        type: 'migration_path',
+                        title: "3. Керей мен Жәнібек: Ұлы Көш",
+                        desc: "Шейбани ханнан бөлінген Керей мен Жәнібек хандардың тарихи көш бағытын дұрыс ретімен таңда.",
+                        nodes: [
+                            { text: "Әбілқайыр ұлысынан бөліну", icon: "👣", info: "Шейбани ханның озбырлығына шыдамаған халық еркіндікке ұмтылып, бөліне бастады." },
+                            { text: "Моғолстанға өту", icon: "🏜️", info: "Есенбұға хан Керей мен Жәнібекті қуана қарсы алып, Шу бойынан жер берді." },
+                            { text: "Шу бойында ту тігу", icon: "🇰🇿", info: "1465 жылы Шу мен Қозыбасы арасында Қазақ хандығының негізі қаланды!" }
+                        ]
+                    }
+                ]
+            },
+            6: {
+                title: "6-Кезең: Отарлау және Кеңестік кезең",
+                tasks: [
+                    {
+                        type: 'logic_sequence',
+                        title: "1. Алаш Телеграммасы: Ұлттық Аманат",
+                        desc: "Семейден жолдаған құпия телеграмманы қалпына келтір! Алаш зиялыларының ұлттық мүдде туралы басты мақсаттарын мағынасына қарай ретімен қой.",
+                        clues: [
+                            "📍 Бостандыққа барар жол 4 қадамнан тұрады:",
+                            "1. Әуелі ұлттың қарусыз майданы — Ана тілін түзеу.",
+                            "2. Екінші, ата-бабадан қалған қасиетті Жерді қорғау.",
+                            "3. Үшінші, ұйқыдағы халықты оятып, Білімге шақыру.",
+                            "4. Соңғы мақсат — Ұлттық Автономияны құру."
+                        ],
+                        correctOrder: ['til', 'zher', 'oyan', 'alash'],
+                        items: [
+                            { id: 'alash', name: 'Автономия', icon: '🏛️' },
+                            { id: 'oyan', name: 'Оян, Қазақ!', icon: '✍️' },
+                            { id: 'til', name: 'Ана тілі', icon: '📕' },
+                            { id: 'zher', name: 'Жер мәселесі', icon: '🌍' }
+                        ]
+                    },
+                    {
+                        type: 'artifact_collection',
+                        title: "2. Артефактты сақта",
+                        desc: "Кеңес кезеңіндегі заманауи заттардың арасынан ұлттық құндылықтарды жинап, мұражайға аман жеткіз (3 зат жина).",
+                        items: [
+                            { icon: '🪕', name: 'Домбыра', valid: true },
+                            { icon: '📻', name: 'Радио', valid: false },
+                            { icon: '💍', name: 'Зергерлік әшекей', valid: true },
+                            { icon: '📕', name: 'Көне қолжазба', valid: true },
+                            { icon: '🗞️', name: 'Газет', valid: false }
+                        ]
+                    },
+                    {
+                        type: 'fact_checker',
+                        title: "3. Түрксіб: Мұрағат құпиясы",
+                        desc: "Тарихи мұрағатты зертте. Берілген құжаттардың ішінен Түрксіб теміржолына қатысты шындықты тап!",
+                        facts: [
+                            {
+                                statement: "Түрксіб теміржолы 1927-1930 жылдары салынып, Орта Азия мен Сібірді қосты.",
+                                isTruth: true,
+                                info: "Дұрыс! Бұл Орта Азия мен Сібірді қосатын алып құрылыс болды."
+                            },
+                            {
+                                statement: "Бұл жолды салу үшін тек шетелдік жұмысшылар мен инженерлер шақырылды.",
+                                isTruth: false,
+                                info: "Қате! Түрксіб құрылысында мыңдаған қазақ жұмысшылары мен Т. Рысқұлов сынды мемлекет қайраткерлері еңбек етті."
+                            },
+                            {
+                                statement: "Түрксіб — КСРО-ның алғашқы бесжылдығының символдарының бірі атанды.",
+                                isTruth: true,
+                                info: "Дұрыс! Бұл индустрияландыру кезеңінің ең маңызды жетістігінің бірі."
+                            }
+                        ]
+                    }
+                ]
+            },
+            7: {
+                title: "7-Кезең: Тәуелсіз Қазақстан",
+                tasks: [
+                    {
+                        type: 'vertical_timeline',
+                        title: "1. Тәуелсіздік Жылнамасы",
+                        desc: "Ұлттық мемлекеттіктің іргетасын қалаған тарихи сәттерді төменнен жоғары қарай ретімен орналастыр. Әр қадам — дербестікке бастайтын алтын саты.",
+                        steps: [
+                            { id: 'decl', text: 'Тәуелсіздік Декларациясы', year: '1991', icon: '📝' },
+                            { id: 'symbols', text: 'Мемлекеттік Рәміздер', year: '1992', icon: '🇰🇿' },
+                            { id: 'tenge', text: 'Ұлттық Валюта — Теңге', year: '1993', icon: '₸' },
+                            { id: 'const', text: 'Ата Заң (Конституция)', year: '1995', icon: '⚖️' }
+                        ]
+                    },
+                    {
+                        type: 'fact_checker',
+                        title: "2. Бейбітшілік елшісі: Дипломатиялық Миссия",
+                        desc: "Қазақстанның әлемдік қауіпсіздікті нығайту жолындағы қадамдарын зертте. Берілген мәлімдемелердің арасынан шындықты тап!",
+                        facts: [
+                            {
+                                statement: "1991 жылы 29 тамызда Семей ядролық полигоны халықтың қалауымен біржола жабылды.",
+                                isTruth: true,
+                                info: "Дұрыс! Бұл — адамзат тарихындағы тұңғыш рет ядролық сынақ полигонының ерікті түрде жабылуы. Қазақстан әлемге бейбіт жолды көрсетті."
+                            },
+                            {
+                                statement: "Қазақстан тәуелсіздік алғанда әлемдегі ядролық арсеналы жағынан 50-ші орында болды.",
+                                isTruth: false,
+                                info: "Қате! Шындығында, Қазақстан әлемдегі №4 ядролық арсеналға ие болды, бірақ бейбітшілік үшін одан өз еркімен бас тартты."
+                            },
+                            {
+                                statement: "БҰҰ Қазақстанның бастамасымен 29 тамызды 'Ядролық сынақтарға қарсы іс-қимыл күні' деп жариялады.",
+                                isTruth: true,
+                                info: "Керемет! Енді жыл сайын бүкіл әлем 29 тамызда адамзатты ядролық қауіптен сақтау туралы еске алады."
+                            }
+                        ]
+                    },
+                    {
+                        type: 'architecture_quest',
+                        title: "3. Болашақ қаласы — Астана",
+                        desc: "Елорданың нысандарын олардың философиялық мағынасына сәйкес арнайы орындарға орналастыр. Әр ғимарат — ұлттық идеяның көрінісі.",
+                        landmarks: [
+                            { name: 'Бәйтерек', icon: '🌳', meaning: 'Өмір ағашы', id: 'baiterek' },
+                            { name: 'Пирамида', icon: '🕊️', meaning: 'Келісім сарайы', id: 'pyramid' },
+                            { name: 'Хан Шатыр', icon: '🎪', meaning: 'Болашақ энергиясы', id: 'khanshatyr' }
+                        ]
+                    }
+                ]
+            }
+        };
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentLevel = parseInt(urlParams.get('id')) || 1;
+        const levelData = gameData[currentLevel];
+        const root = document.getElementById('tasks-root');
+
+        document.getElementById('page-title').innerText = levelData.title;
+
+        levelData.tasks.forEach((task, idx) => {
+            const card = document.createElement('div');
+            card.className = `task-card ${idx === 0 ? 'active' : ''}`;
+            card.id = `card-${idx}`;
+
+            let html = `<div class="task-header"><h3>${task.title}</h3></div><div class="task-desc">${task.desc}</div>`;
+
+            if (task.type === 'gathering') {
+                html += `<div class="items-grid">${task.items.map(it => `<div class="game-item" onclick="pickItem(${idx}, ${it.valid}, this)">${it.icon}</div>`).join('')}</div><div class="backpack-display" id="pack-${idx}">Қоржын: 0/3</div>`;
+            }
+            else if (task.type === 'fire') {
+                html += `
+                <div class="fire-stage" id="fire-stage-${idx}">
+                    <div class="instruction-hint" id="hint-${idx}">Тасты сүйреп соқ!</div>
+                    <div class="heat-bar-container"><div class="heat-bar-fill" id="heat-${idx}"></div></div>
+                    <div class="fire-overlay" id="flame-anim-${idx}"><div class="video-flame" id="flame-icon-${idx}">🔥</div></div>
+                    <div class="stone-target" id="target-${idx}"></div>
+                    <div class="stone-drag" id="drag-${idx}"></div>
+                    <div class="fan-tool" id="fan-${idx}" onclick="fanFire(${idx})">🍃</div>
+                </div>`;
+            }
+            else if (task.type === 'scene') {
+                html += `<div class="scenes-container">
+                    ${task.options.map((opt, optIdx) => `
+                        <div class="scene-choice" onclick="pickScene(${idx}, ${opt.valid}, this)">
+                            <div class="scene-bg" style="background-image: url('${opt.image}')"></div>
+                            ${opt.hasSnow ? `
+                                <div class="snow-overlay" id="snow-${idx}-${optIdx}"></div>
+                            ` : ''}
+                            <div class="scene-info">${opt.info}</div>
+                            <div class="scene-label">${opt.text}</div>
+                        </div>
+                    `).join('')}
+                </div>`;
+            }
+            else if (task.type === 'chariot_builder') {
+                html += `
+                <div class="chariot-container">
+                    <div class="chariot-blueprint" id="blueprint-${idx}">
+                        <div class="drop-zone" id="zone-frame" data-accept="frame" ondragover="allowDrop(event)" ondrop="dropChariot(event, ${idx})" ondragenter="highlightZone(this)" ondragleave="unhighlightZone(this)"></div>
+                        <div class="drop-zone" id="zone-axle" data-accept="axle" ondragover="allowDrop(event)" ondrop="dropChariot(event, ${idx})" ondragenter="highlightZone(this)" ondragleave="unhighlightZone(this)"></div>
+                        <div class="drop-zone" id="zone-wheel1" data-accept="wheel1" ondragover="allowDrop(event)" ondrop="dropChariot(event, ${idx})" ondragenter="highlightZone(this)" ondragleave="unhighlightZone(this)"></div>
+                        <div class="drop-zone" id="zone-wheel2" data-accept="wheel2" ondragover="allowDrop(event)" ondrop="dropChariot(event, ${idx})" ondragenter="highlightZone(this)" ondragleave="unhighlightZone(this)"></div>
+                    </div>
+                    <div id="chariot-feedback-${idx}" style="width:100%; text-align:center; margin-top:10px; font-weight:bold; min-height:24px;"></div>
+                    <p style="width:100%; text-align:center; color:#aaa; font-size:0.8rem;">Бөлшектерді сәйкес ұяшыққа сүйреңіз</p>
+                    <div class="chariot-parts-bin">
+                        ${task.parts.map(part => `
+                            <div class="chariot-part" id="part-${idx}-${part.id}" draggable="true" ondragstart="dragChariot(event, '${part.id}')">
+                                <div style="font-size: 2rem;">${part.icon}</div>
+                                <div style="font-size: 0.8rem;">${part.name}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>`;
+            }
+            else if (task.type === 'vertical_timeline') {
+                html += `
+                <div class="timeline-container">
+                    <div class="timeline-stairway" id="stairway-${idx}">
+                        <div class="stair-step" data-step="3" id="stair-${idx}-3"><span>4</span></div>
+                        <div class="stair-step" data-step="2" id="stair-${idx}-2"><span>3</span></div>
+                        <div class="stair-step" data-step="1" id="stair-${idx}-1"><span>2</span></div>
+                        <div class="stair-step" data-step="0" id="stair-${idx}-0"><span>1</span></div>
+                    </div>
+                    <div class="timeline-pool" id="pool-${idx}">
+                        ${[...task.steps].sort(() => Math.random() - 0.5).map(s => `
+                            <div class="timeline-stone" onclick="placeTimelineStep(${idx}, '${s.id}', this)">
+                                <div class="stone-icon">${s.icon}</div>
+                                <div class="stone-text">${s.text}</div>
+                                <div class="stone-year">${s.year}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="timeline-status" id="status-${idx}">Оқиғаларды ретімен таңдаңыз</div>
+                </div>`;
+            }
+            else if (task.type === 'migration_cycle') {
+                html += `
+                <div class="migration-container">
+                    <div class="cycle-wheel">
+                        <div class="season-slot slot-0" id="slot-${idx}-0"></div>
+                        <div class="season-slot slot-1" id="slot-${idx}-1"></div>
+                        <div class="season-slot slot-2" id="slot-${idx}-2"></div>
+                        <div class="season-slot slot-3" id="slot-${idx}-3"></div>
+                    </div>
+                    <div class="migration-status" id="migration-status-${idx}">Маусымдарды ретімен қойыңыз</div>
+                    <div class="seasons-palette">
+                        ${task.seasons.map(s => `
+                            <div class="season-chip" onclick="placeSeason(${idx}, '${s.id}', this)">
+                                ${s.icon}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>`;
+            }
+            else if (task.type === 'petroglyph_matching') {
+                const shuffledSymbols = [...task.pairs].sort(() => Math.random() - 0.5);
+                const shuffledMeanings = [...task.pairs].sort(() => Math.random() - 0.5);
+
+                html += `
+                <div class="petroglyph-container">
+                    <div class="petroglyph-grid">
+                        <div class="symbols-column">
+                            ${shuffledSymbols.map(pair => `
+                                <div class="petroglyph-symbol" data-id="${pair.id}" onclick="selectPetroglyph(${idx}, '${pair.id}', 'symbol', this)">
+                                    ${pair.symbol}
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="meanings-column">
+                            ${shuffledMeanings.map(pair => `
+                                <div class="petroglyph-meaning" data-id="${pair.id}" onclick="selectPetroglyph(${idx}, '${pair.id}', 'meaning', this)">
+                                    ${pair.meaning}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>`;
+            }
+            else if (task.type === 'choice_story') {
+                html += `
+                ${task.image ? `<div style="text-align:center; margin-bottom:20px;"><img src="${task.image}" style="max-width:100%; border-radius:15px; border:2px solid #D4AF37; box-shadow:0 0 20px rgba(212,175,55,0.3);"></div>` : ''}
+                <div class="choices-grid">
+                    ${task.choices.map(c => `<div class="choice-btn" onclick="makeChoice(${idx}, ${c.valid}, this, '${c.info.replace(/'/g, "\\'")}')">${c.text}</div>`).join('')}
+                </div><div class="migration-status" id="choice-info-${idx}"></div>`;
+            }
+            else if (task.type === 'battle_commander') {
+                html += `
+                <div class="battle-container">
+                    <div class="battle-stage" id="stage-${idx}">
+                        <div class="unit-group hero-group" id="hero-${idx}">🐎🐎🐎</div>
+                        <div class="unit-group enemy-group" id="enemy-${idx}">🛡️💂‍♂️🛡️</div>
+                        <div class="unit-group ambush-top" id="ambush-top-${idx}">🏹🏹</div>
+                        <div class="unit-group ambush-bottom" id="ambush-bottom-${idx}">🏹🏹</div>
+                        <div class="battle-effect" id="effect-${idx}">💥</div>
+                    </div>
+                    <div class="migration-status" id="battle-status-${idx}" style="margin: 10px 0;">Бұйрық күтілуде...</div>
+                    <div class="command-deck">
+                        ${task.steps.sort(() => Math.random() - 0.5).map(step => `
+                            <button class="command-card" id="cmd-${idx}-${step.id}" onclick="executeCommand(${idx}, '${step.id}', ${step.order})">
+                                <div style="font-size:2rem; margin-bottom:5px;">${step.icon}</div>
+                                <div>${step.text}</div>
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>`;
+            }
+            else if (task.type === 'ordering') {
+                const shuffled = [...task.items].sort(() => Math.random() - 0.5);
+                html += `
+                <div class="order-container" id="order-${idx}">
+                    ${shuffled.map(it => `
+                        <div class="order-item" onclick="pickOrder(${idx}, ${it.order}, this)">
+                            <div style="font-size:2rem">${it.icon}</div>
+                            <div>${it.text}</div>
+                        </div>
+                    `).join('')}
+                </div><div class="migration-status" id="order-status-${idx}">Әрекеттерді ретімен қойыңыз</div>`;
+            }
+            else if (task.type === 'army_hierarchy') {
+                html += `
+                <div class="hierarchy-container">
+                    <div class="hierarchy-slots">
+                        ${task.correctOrder.map((_, i) => `
+                            <div class="hierarchy-slot" data-index="${i}" ondragover="allowDrop(event)" ondrop="dropHierarchy(event, ${idx}, ${i})">
+                                <div class="slot-label">${4 - i}-ші деңгей</div>
+                            </div>
+                        `).reverse().join('')}
+                    </div>
+                    <div class="hierarchy-pool">
+                        ${task.items.sort(() => Math.random() - 0.5).map(item => `
+                            <div class="hierarchy-item" id="army-${idx}-${item.id}" draggable="true" ondragstart="dragHierarchy(event, '${item.id}')">
+                                <div class="item-icon">${item.icon}</div>
+                                <div style="display:flex; flex-direction:column; align-items:flex-start;">
+                                    <div class="item-name">${item.name}</div>
+                                    <div class="item-count">${item.count}</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div id="hierarchy-feedback-${idx}" class="migration-status" style="margin-top:15px; min-height:24px;"></div>
+                </div>`;
+            }
+            else if (task.type === 'rune_decode') {
+                html += `
+                <div class="rune-container">
+                    ${task.hint ? `<div class="rune-hint" style="background:rgba(212,175,55,0.1); padding:10px; border:1px solid #D4AF37; border-radius:8px; margin-bottom:15px; font-size:0.9rem; color:#FFD700;">📜 ${task.hint}</div>` : ''}
+                    <div class="rune-grid">
+                        ${[...task.target].map((_, i) => `<div class="rune-slot" id="rune-${idx}-${i}">?</div>`).join('')}
+                    </div>
+                    <div class="alphabet-grid">
+                        ${[...task.alphabet].sort(() => Math.random() - 0.5).map(a => `<div class="alpha-key" onclick="pressRune(${idx}, '${a.char}', '${a.rune}')">
+                            <div style="font-size:1.5rem">${a.rune}</div>
+                            <div style="font-size:0.6rem; margin-top:4px; opacity:0.7">${a.name || ''}</div>
+                        </div>`).join('')}
+                    </div>
+                </div>`;
+            }
+            else if (task.type === 'diplomatic_trade') {
+                html += `<div class="trade-container">
+                    ${task.guests.map((g, gIdx) => `
+                        <div class="guest-row" style="background:rgba(255,255,255,0.05); padding:15px; border-radius:12px; margin-bottom:10px; border:1px solid ${g.color || 'rgba(255,255,255,0.1)'}; display:flex; align-items:center;">
+                            <div class="guest-avatar" style="font-size:3rem; margin-right:15px; background:rgba(0,0,0,0.3); width:70px; height:70px; display:flex; align-items:center; justify-content:center; border-radius:50%; border:2px solid ${g.color || '#444'}">
+                                ${g.avatar || '👤'}
+                            </div>
+                            <div style="flex:1">
+                                <div style="display:flex; align-items:center; gap:8px;">
+                                    <strong style="color:#D4AF37; font-size:1.1rem;">${g.name}</strong>
+                                    <span style="font-size:0.7rem; background:${g.color || '#444'}; color:#fff; padding:2px 8px; border-radius:10px;">${g.country || ''}</span>
+                                </div>
+                                <small style="color:#bbb; display:block; margin-top:4px;">${g.need}</small>
+                            </div>
+                            <div class="gift-options" id="gifts-${idx}-${gIdx}" style="display:flex; gap:8px;">
+                                ${g.options.map(o => `
+                                    <button class="gift-btn" onclick="giveGift(${idx}, ${gIdx}, '${o.text || o}', '${g.correct}')" style="background:#222; border:1px solid #444; color:#fff; padding:8px 12px; border-radius:8px; cursor:pointer; display:flex; flex-direction:column; align-items:center; min-width:60px;">
+                                        <span style="font-size:1.2rem;">${o.icon || '🎁'}</span>
+                                        <span style="font-size:0.7rem; margin-top:4px;">${o.text || o}</span>
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>`;
+            }
+            else if (task.type === 'fact_checker') {
+                html += `
+                <div class="archive-desk" id="archive-root-${idx}">
+                    <div class="archive-progress" id="archive-prog-${idx}">Құжат 1 / ${task.facts.length}</div>
+                    <div class="archive-folder" id="archive-folder-${idx}">
+                        <div class="stamp-overlay stamp-truth" id="stamp-t-${idx}">ШЫНДЫҚ</div>
+                        <div class="stamp-overlay stamp-myth" id="stamp-m-${idx}">МИФ</div>
+                        <div class="archive-content" id="archive-text-${idx}">${task.facts[0].statement}</div>
+                    </div>
+                    <div class="archive-actions">
+                        <button class="archive-btn btn-truth" onclick="checkFact(${idx}, true)">Шындық</button>
+                        <button class="archive-btn btn-myth" onclick="checkFact(${idx}, false)">Миф</button>
+                    </div>
+                    <div id="archive-feedback-${idx}" class="justice-feedback"></div>
+                </div>`;
+            }
+            else if (task.type === 'artifact_collection') {
+                html += `
+                <div class="artifact-grid">
+                    ${task.items.map(it => `
+                        <div class="artifact-item" onclick="collectArtifact(${idx}, ${it.valid}, this)">
+                            <div style="font-size:3rem">${it.icon}</div>
+                            <div>${it.name}</div>
+                        </div>
+                    `).join('')}
+                </div><div class="migration-status" id="artifact-status-${idx}">Құнды жәдігерлерді жинаңыз: 0/3</div>`;
+            }
+            else if (task.type === 'ceremony_order') {
+                const shuffled = [...task.steps].sort(() => Math.random() - 0.5);
+                html += `<div class="ceremony-list">
+                    ${shuffled.map(s => `<div class="ceremony-step" id="step-${idx}-${s.order}" onclick="pickCeremonyStep(${idx}, ${s.order}, this)">${s.text}</div>`).join('')}
+                </div><div class="migration-status" id="ceremony-status-${idx}" style="margin-top:20px;">Рәсімді басынан бастап орындаңыз</div>`;
+            }
+            else if (task.type === 'justice_court') {
+                html += `
+                <div class="justice-court-container" id="justice-root-${idx}">
+                    <!-- Cases will be rendered here via JS -->
+                </div>`;
+                setTimeout(() => showJusticeCase(idx, 0), 10);
+            }
+            else if (task.type === 'logic_sequence') {
+                html += `
+                 <div class="logic-container">
+                    <div class="clues-box">
+                        <h4 style="color:#D4AF37; margin-bottom:10px;">📜 Көне жазба:</h4>
+                        ${task.clues.map(c => `<p style="margin:5px 0;">${c}</p>`).join('')}
+                    </div>
+                    <div class="sequence-area">
+                        <div class="slots-column">
+                            ${task.correctOrder.map((_, i) => `<div class="logic-slot" data-index="${i}" ondragover="allowDrop(event)" ondrop="dropLogic(event, ${idx}, ${i})"></div>`).join('')}
+                        </div>
+                        <div class="items-pool">
+                             ${task.items.sort(() => Math.random() - 0.5).map(item => `
+                                <div class="logic-item" id="logic-${idx}-${item.id}" draggable="true" ondragstart="dragLogic(event, '${item.id}')">
+                                    <div style="font-size:2rem">${item.icon}</div>
+                                    <div style="font-size:0.8rem">${item.name}</div>
+                                </div>
+                             `).join('')}
+                        </div>
+                    </div>
+                    <div id="logic-feedback-${idx}" class="migration-status" style="margin-top:15px; min-height:24px;"></div>
+                 </div>`;
+            }
+            else if (task.type === 'strategy_builder') {
+                html += `
+                <div class="strategy-container">
+                    ${task.hint ? `<div style="background:rgba(255,255,255,0.1); padding:10px; border-radius:8px; margin-bottom:10px; font-style:italic; border-left:3px solid #FFD700; color:#ddd; font-size:0.9rem;">${task.hint}</div>` : ''}
+                    <div class="strategy-grid">
+                        ${task.categories.map(cat => `
+                            <div class="strategy-column">
+                                <div class="col-title">${cat.name}</div>
+                                <div class="col-options">
+                                    ${cat.options.map(opt => `
+                                        <div class="strategy-option" 
+                                             id="opt-${idx}-${cat.id}-${opt.id}"
+                                             onclick="selectStrategy(${idx}, '${cat.id}', '${opt.id}')">
+                                            <div style="font-size:2rem">${opt.icon}</div>
+                                            <div>${opt.text}</div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <button class="action-btn" onclick="executeStrategy(${idx})" style="margin-top:20px; width:100%;">⚔️ Жоспарды орындау</button>
+                    <div id="strategy-feedback-${idx}" class="migration-status" style="margin-top:15px;"></div>
+                </div>`;
+            }
+            else if (task.type === 'migration_path') {
+                const shuffledNodes = task.nodes.map((n, i) => ({ ...n, originalIdx: i })).sort(() => Math.random() - 0.5);
+                html += `
+                <div class="kosh-container" id="kosh-root-${idx}">
+                    <div class="kosh-line">
+                        <div class="kosh-line-progress" id="kosh-progress-${idx}"></div>
+                    </div>
+                    ${shuffledNodes.map(node => `
+                        <div class="kosh-node" id="node-${idx}-${node.originalIdx}" onclick="stepKosh(${idx}, ${node.originalIdx})">
+                            <div class="node-icon">${node.icon}</div>
+                            <div class="node-content">
+                                <div class="node-title">${node.text}</div>
+                                <div class="node-info">${node.info}</div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div><div class="migration-status" id="kosh-status-${idx}" style="margin-top:20px;">Көш бағытын ретімен таңдаңыз</div>`;
+            }
+            else if (task.type === 'architecture_quest') {
+                html += `
+                <div class="arch-map">
+                    ${task.landmarks.map(l => `
+                        <div class="arch-slot" id="slot-${idx}-${l.id}" data-label="${l.meaning}" ondragover="allowDrop(event)" ondrop="dropLandmark(event, ${idx}, '${l.id}')" ondragenter="highlightZone(this)" ondragleave="unhighlightZone(this)">
+                             <div style="font-size:2rem; opacity:0.1; position:absolute;">?</div>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="landmark-plans">
+                    ${task.landmarks.map(l => `
+                        <div class="landmark-card" id="landmark-${idx}-${l.id}" draggable="true" ondragstart="dragLandmark(event, '${l.id}')">
+                            <div style="font-size:2rem">${l.icon}</div>
+                            <div style="font-size:0.8rem; font-weight:bold; color:#fff; margin-top:5px;">${l.name}</div>
+                        </div>
+                    `).sort(() => Math.random() - 0.5).join('')}
+                </div>`;
+            }
+            else html += `<button class="next-btn" onclick="completeTask(${idx})">Өткізу</button>`;
+
+            card.innerHTML = html;
+            root.appendChild(card);
+            if (task.type === 'fire') initFireGame(idx);
+            if (task.type === 'scene') initSnowAnimation(idx, task.options);
+        });
+
+        // --- GLOBAL HELPERS & ANIMATIONS ---
+        function createSpark(x, y, idx) {
+            const spark = document.createElement('div');
+            spark.className = 'spark';
+            spark.style.left = (x - 10) + 'px';
+            spark.style.top = (y - 10) + 'px';
+            document.getElementById(`fire-stage-${idx}`).appendChild(spark);
+            setTimeout(() => spark.remove(), 600);
+        }
+
+        window.initSnowAnimation = (idx, options) => {
+            // CSS snow is already handling most, but we can add particle logic here if needed
+        };
+
+        window.pickScene = (idx, valid, el) => {
+            if (el.classList.contains('selected')) return;
+            const container = el.parentElement;
+            container.querySelectorAll('.scene-choice').forEach(c => c.style.pointerEvents = 'none');
+
+            el.classList.add('selected');
+            const info = el.querySelector('.scene-info');
+            info.style.opacity = '1';
+            info.style.transform = 'translateY(0)';
+
+            if (valid) {
+                el.style.borderColor = "#4CAF50";
+                setTimeout(() => completeTask(idx), 2000);
+            } else {
+                el.style.borderColor = "#e74c3c";
+                setTimeout(() => {
+                    el.classList.remove('selected');
+                    info.style.opacity = '0';
+                    info.style.transform = 'translateY(20px)';
+                    container.querySelectorAll('.scene-choice').forEach(c => c.style.pointerEvents = 'auto');
+                    el.style.borderColor = "rgba(255,255,255,0.1)";
+                }, 2000);
+            }
+        };
+
+        // --- DASHBOARD (LEVEL 2: CHARIOT) ---------
+        window.dragChariot = (ev, id) => {
+            ev.dataTransfer.setData("text", id);
+        };
+
+        window.dropChariot = (ev, idx) => {
+            ev.preventDefault();
+            const id = ev.dataTransfer.getData("text");
+            const slot = ev.target;
+            const accept = slot.getAttribute('data-accept');
+
+            if (id === accept || (id === 'wheel' && accept.startsWith('wheel'))) {
+                // Find the icon and name from the part bin
+                const partIcon = document.getElementById(`part-${idx}-${id}`)?.querySelector('div:first-child')?.innerText || '⚙️';
+                slot.innerHTML = `<div style="font-size: 2.5rem; animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);">${partIcon}</div>`;
+                slot.classList.add('filled');
+                slot.style.borderStyle = 'solid';
+                slot.style.borderColor = '#D4AF37';
+                slot.style.background = 'rgba(212, 175, 55, 0.1)';
+
+                checkChariot(idx);
+            } else {
+                const feedback = document.getElementById(`chariot-feedback-${idx}`);
+                feedback.innerText = "❌ Бұл бөлшек мұнда келмейді!";
+                feedback.style.color = "#e74c3c";
+                slot.style.animation = "shake 0.4s";
+                setTimeout(() => {
+                    feedback.innerText = "";
+                    slot.style.animation = "";
+                }, 1500);
+            }
+        };
+
+        window.highlightZone = (el) => el.style.background = "rgba(212, 175, 55, 0.2)";
+        window.unhighlightZone = (el) => { if (!el.classList.contains('filled')) el.style.background = ""; };
+
+        function checkChariot(idx) {
+            const zones = document.querySelectorAll(`#card-${idx} .drop-zone`);
+            const filled = Array.from(zones).filter(z => z.classList.contains('filled')).length;
+            const feedback = document.getElementById(`chariot-feedback-${idx}`);
+
+            if (filled === 4) {
+                feedback.innerText = "✅ Керемет! Күйме дайын!";
+                feedback.style.color = "#4CAF50";
+                setTimeout(() => completeTask(idx), 1000);
+            }
+        }
+
+        // --- CHARIOT CSS ANIMATIONS ---
+        const chariotStyles = document.createElement('style');
+        chariotStyles.textContent = `
+            @keyframes popIn {
+                from { transform: scale(0); opacity: 0; }
+                to { transform: scale(1); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(chariotStyles);
+
+
+        // --- GAME 1 ---------
+        let packState = {};
+        window.pickItem = (idx, valid, el) => {
+            if (!packState[idx]) packState[idx] = { count: 0, correct: 0 };
+            if (el.classList.contains('selected') || packState[idx].count >= 3) return;
+            el.classList.add('selected');
+            packState[idx].count++;
+            if (valid) packState[idx].correct++;
+            document.getElementById(`pack-${idx}`).innerText = `Қоржын: ${packState[idx].count}/3`;
+            if (packState[idx].count === 3) {
+                if (packState[idx].correct === 3) {
+                    document.getElementById(`pack-${idx}`).style.color = "#4CAF50";
+                    document.getElementById(`pack-${idx}`).innerText = "Барлығы дұрыс! ✓";
+                    completeTask(idx);
+                } else {
+                    document.getElementById(`pack-${idx}`).style.color = "#e74c3c";
+                    document.getElementById(`pack-${idx}`).innerText = "Қате! Қайтадан";
+                    setTimeout(() => {
+                        packState[idx] = { count: 0, correct: 0 };
+                        el.parentElement.querySelectorAll('.selected').forEach(e => e.classList.remove('selected'));
+                        document.getElementById(`pack-${idx}`).innerText = "Қоржын: 0/3";
+                        document.getElementById(`pack-${idx}`).style.color = "#FFD700";
+                    }, 1500);
+                }
+            }
+        };
+
+        // --- GAME 2: FIRE (FIXED) ---------
+        function initFireGame(idx) {
+            const dragEl = document.getElementById(`drag-${idx}`);
+            const targetEl = document.getElementById(`target-${idx}`);
+            const hint = document.getElementById(`hint-${idx}`);
+            const heatBar = document.getElementById(`heat-${idx}`);
+            const flame = document.getElementById(`flame-anim-${idx}`);
+            const fan = document.getElementById(`fan-${idx}`);
+            const flameIcon = document.getElementById(`flame-icon-${idx}`);
+
+            let heat = 0;
+            let phase = 1;
+            let isDragging = false;
+            let canHit = true;
+
+            dragEl.addEventListener('mousedown', startDrag);
+            window.addEventListener('mousemove', moveDrag);
+            window.addEventListener('mouseup', endDrag);
+
+            function startDrag(e) {
+                if (phase !== 1) return;
+                isDragging = true;
+                dragEl.style.transition = 'none';
+            }
+
+            function moveDrag(e) {
+                if (!isDragging) return;
+                const stage = dragEl.parentElement.getBoundingClientRect();
+                let left = e.clientX - stage.left - 45;
+                let top = e.clientY - stage.top - 35;
+                dragEl.style.left = left + 'px';
+                dragEl.style.top = top + 'px';
+
+                const r1 = dragEl.getBoundingClientRect();
+                const r2 = targetEl.getBoundingClientRect();
+                if (!(r1.right < r2.left || r1.left > r2.right || r1.bottom < r2.top || r1.top > r2.bottom)) {
+                    if (canHit) {
+                        createSpark(r1.right, r1.top + 30, idx);
+                        heat += 8; // Slower heat gain
+                        updateHeat();
+                        canHit = false;
+                        setTimeout(() => canHit = true, 300);
+                    }
+                }
+            }
+
+            function endDrag() {
+                isDragging = false;
+                dragEl.style.transition = 'all 0.5s';
+                dragEl.style.left = '25%'; dragEl.style.top = ''; dragEl.style.bottom = '50px';
+            }
+
+            window.fanFire = (i) => {
+                if (i !== idx || phase !== 2) return;
+                heat += 5; // Slower fan heat
+                updateHeat();
+
+                const f = document.getElementById(`fan-${idx}`);
+                f.style.transform = "rotate(-45deg) scale(0.85)";
+                setTimeout(() => f.style.transform = "rotate(0deg) scale(1)", 150);
+
+                let size = 3 + (heat - 50) / 15;
+                flameIcon.style.fontSize = size + "rem";
+            };
+
+            function updateHeat() {
+                if (heat > 100) heat = 100;
+                heatBar.style.width = heat + "%";
+
+                if (phase === 1 && heat >= 50) {
+                    phase = 2;
+                    hint.innerText = "Енді жапырақпен желпіп маздат!";
+                    dragEl.style.opacity = 0; targetEl.style.opacity = 0; dragEl.style.pointerEvents = "none";
+                    flame.style.opacity = 0.6;
+                    fan.style.opacity = 1; fan.style.pointerEvents = "auto";
+                }
+
+                if (phase === 2 && heat >= 100) {
+                    phase = 3;
+                    hint.innerText = "ОТ ЛАУЛАП ЖАНДЫ! 🔥";
+                    hint.style.color = "#FFD700";
+                    flame.style.opacity = 1;
+                    fan.style.display = 'none';
+                    completeTask(idx);
+                }
+            }
+
+            function createSpark(x, y, i) {
+                const s = document.createElement('div');
+                s.className = 'spark';
+                const rect = document.getElementById(`fire-stage-${i}`).getBoundingClientRect();
+                s.style.left = (x - rect.left) + 'px';
+                s.style.top = (y - rect.top) + 'px';
+                document.getElementById(`fire-stage-${i}`).appendChild(s);
+
+                const angle = Math.random() * Math.PI - Math.PI / 2;
+                const dist = 40 + Math.random() * 40;
+                s.animate([
+                    { transform: 'translate(0,0) scale(1)', opacity: 1 },
+                    { transform: `translate(${Math.cos(angle) * dist}px, ${Math.sin(angle) * dist}px) scale(0)`, opacity: 0 }
+                ], { duration: 600 });
+
+                setTimeout(() => s.remove(), 600);
+            }
+
+            // Slower decay
+            setInterval(() => {
+                if (heat > 0 && phase < 3) {
+                    heat -= 0.5;
+                    heatBar.style.width = heat + "%";
+                }
+            }, 150);
+        }
+
+        // --- GAME 3: WINTER EFFECT (CSS-based, no animation needed) ---
+        function initSnowAnimation(idx, options) {
+            // Winter effect is now handled by CSS filters
+            // No JavaScript animation needed
+        }
+
+        // --- GAME 3: SCENE SELECTION ---
+        window.pickScene = (idx, valid, el) => {
+            if (valid) {
+                el.classList.add('correct');
+                setTimeout(() => completeTask(idx), 800);
+            }
+            else {
+                el.classList.add('wrong');
+                setTimeout(() => el.classList.remove('wrong'), 500);
+            }
+        }
+
+        // --- GAME 4: CHARIOT BUILDER ---
+        window.allowDrop = (ev) => {
+            ev.preventDefault();
+        };
+
+        window.highlightZone = (el) => {
+            el.classList.add('highlight');
+        };
+
+        window.unhighlightZone = (el) => {
+            el.classList.remove('highlight');
+        };
+
+        window.dragChariot = (ev, partId) => {
+            ev.dataTransfer.setData("text", partId);
+            ev.dataTransfer.setData("sourceId", ev.target.id);
+        };
+
+        window.dropChariot = (ev, idx) => {
+            ev.preventDefault();
+            const zone = ev.target;
+            zone.classList.remove('highlight');
+
+            const partId = ev.dataTransfer.getData("text");
+            const sourceId = ev.dataTransfer.getData("sourceId");
+            const el = document.getElementById(sourceId);
+
+            // Check if dropped on correct zone
+            const accepted = zone.dataset.accept;
+            const isWheel = (partId === 'wheel1' || partId === 'wheel2') && (accepted === 'wheel1' || accepted === 'wheel2');
+
+            if (partId !== accepted && !isWheel) {
+                const feedback = document.getElementById(`chariot-feedback-${idx}`);
+                feedback.innerText = "Бұл бөлшектің орны басқа жерде!";
+                feedback.style.color = "#e74c3c";
+                zone.style.animation = "shake 0.4s";
+                setTimeout(() => { feedback.innerText = ""; zone.style.animation = ""; }, 1500);
+                return;
+            }
+
+            if (el) placeChariotPart(idx, partId, el);
+        };
+
+        let chariotState = {};
+        window.placeChariotPart = (idx, partId, el) => {
+            if (!chariotState[idx]) chariotState[idx] = { currentStep: 1, placed: [] };
+            const state = chariotState[idx];
+            const task = levelData.tasks[idx];
+            const part = task.parts.find(p => p.id === partId);
+            const feedback = document.getElementById(`chariot-feedback-${idx}`);
+
+            // Validation: Check Order
+            if (part.step > state.currentStep) {
+                feedback.innerText = "Әлі ерте! Алдымен алдыңғы бөлшекті орнатыңыз.";
+                feedback.style.color = "#e74c3c";
+                return;
+            }
+            if (part.step < state.currentStep && !state.placed.includes(partId)) {
+                // Should not happen if step logic is correct, but just in case
+            }
+            if (!part.valid) {
+                feedback.innerText = "Бұл бөлшек жарамайды!";
+                feedback.style.color = "#e74c3c";
+                return;
+            }
+
+            if (state.placed.includes(partId)) return;
+
+            // Success placement
+            state.placed.push(partId);
+            el.classList.add('placed'); // Dim the source
+
+            const blueprint = document.getElementById(`blueprint-${idx}`);
+            const placedItem = document.createElement('div');
+            placedItem.className = 'placed-item';
+            placedItem.id = `placed-${partId}`;
+            placedItem.innerHTML = part.icon;
+
+            // Add specific glow for visibility
+            placedItem.style.filter = "drop-shadow(0 0 10px #FFD700)";
+
+            blueprint.appendChild(placedItem);
+
+            // Remove the drop zone visual
+            const zoneId = partId === 'frame' ? 'zone-frame' : (partId === 'axle' ? 'zone-axle' : (partId === 'wheel1' ? 'zone-wheel1' : 'zone-wheel2'));
+            /* If wheel, simplistic mapping. Better to hide the specific zone dropped on, but here simplistic is fine */
+
+            // Update Feedback
+            feedback.innerText = "Дұрыс! Келесісін жалғастыр.";
+            feedback.style.color = "#4CAF50";
+
+            // Check if step finished
+            const stepParts = task.parts.filter(p => p.step === state.currentStep && p.valid);
+            const placedStepParts = state.placed.filter(pid => {
+                const p = task.parts.find(part => part.id === pid);
+                return p.step === state.currentStep && p.valid;
+            });
+
+            if (placedStepParts.length === stepParts.length) {
+                state.currentStep++;
+            }
+
+            const validPartsCount = task.parts.filter(p => p.valid).length;
+            if (state.placed.length === validPartsCount) {
+                feedback.innerText = "Күйме толық құрастырылды! Тамаша!";
+                setTimeout(() => completeTask(idx), 1000);
+            }
+        };
+
+        // --- GAME 5: MIGRATION CYCLE ---
+        let migrationState = {};
+        window.placeSeason = (idx, seasonId, el) => {
+            if (!migrationState[idx]) migrationState[idx] = { placedCount: 0, correctlyPlaced: 0 };
+            const state = migrationState[idx];
+            const task = levelData.tasks[idx];
+            const season = task.seasons.find(s => s.id === seasonId);
+
+            if (el.classList.contains('selected')) return;
+
+            const slotIdx = state.placedCount;
+            const slot = document.getElementById(`slot-${idx}-${slotIdx}`);
+
+            el.classList.add('selected');
+            el.style.opacity = '0.3';
+
+            const chip = document.createElement('div');
+            chip.className = 'season-chip placed';
+            chip.innerHTML = season.icon;
+            slot.appendChild(chip);
+
+            if (season.correctPos === slotIdx) {
+                state.correctlyPlaced++;
+            }
+
+            state.placedCount++;
+
+            if (state.placedCount === 4) {
+                const status = document.getElementById(`migration-status-${idx}`);
+                if (state.correctlyPlaced === 4) {
+                    status.innerText = "Керемет! Көш жолы дұрыс анықталды. ✓";
+                    status.style.color = "#4CAF50";
+                    setTimeout(() => completeTask(idx), 1500);
+                } else {
+                    status.innerText = "Қате! Көш мезгілдері ауысып кетті. Қайта көріңіз.";
+                    status.style.color = "#e74c3c";
+                    setTimeout(() => {
+                        // Reset
+                        state.placedCount = 0;
+                        state.correctlyPlaced = 0;
+                        for (let i = 0; i < 4; i++) document.getElementById(`slot-${idx}-${i}`).innerHTML = '';
+                        const chips = el.parentElement.querySelectorAll('.season-chip');
+                        chips.forEach(c => { c.classList.remove('selected'); c.style.opacity = '1'; });
+                        status.innerText = "Маусымдарды ретімен қойыңыз";
+                        status.style.color = "#FFD700";
+                    }, 2000);
+                }
+            }
+        };
+        // --- GAME 6: PETROGLYPH MATCHING ---
+        let petroglyphState = {};
+
+        function placeTimelineStep(taskIdx, stepId, element) {
+            const task = levelData.tasks[taskIdx];
+            const currentStep = task.steps.find(s => s.id === stepId);
+            const status = document.getElementById(`status-${taskIdx}`);
+
+            if (!task.placedCount) task.placedCount = 0;
+
+            if (task.steps[task.placedCount].id === stepId) {
+                // Correct
+                const targetSlot = document.getElementById(`stair-${taskIdx}-${task.placedCount}`);
+                targetSlot.classList.add('filled');
+                targetSlot.innerHTML = `
+                    <div style="display:flex; align-items:center; gap:20px; width:100%; animation: slideInLeft 0.5s ease">
+                        <div style="font-size:1.8rem">${currentStep.icon}</div>
+                        <div style="text-align:left">
+                            <div style="font-weight:bold; color:#D4AF37">${currentStep.year}</div>
+                            <div style="font-size:0.9rem">${currentStep.text}</div>
+                        </div>
+                    </div>
+                    <div style="position:absolute; right:20px; color:#4CAF50; font-size:1.5rem">✓</div>
+                `;
+
+                element.style.opacity = '0';
+                element.style.pointerEvents = 'none';
+                task.placedCount++;
+
+                if (task.placedCount === task.steps.length) {
+                    status.innerText = "Керемет! Тарих шежіресі қалыптасты.";
+                    status.style.color = "#4CAF50";
+                    setTimeout(() => completeTask(taskIdx), 1000);
+                } else {
+                    status.innerText = "Келесі оқиға...";
+                    status.style.color = "#D4AF37";
+                }
+            } else {
+                // Wrong
+                status.innerText = "Қате! Уақыт тізбегі бұзылды. Қайта көріңіз.";
+                status.style.color = "#e74c3c";
+                element.classList.add('wrong');
+                setTimeout(() => element.classList.remove('wrong'), 500);
+            }
+        }
+
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInLeft {
+                from { opacity: 0; transform: translateX(-30px); }
+                to { opacity: 1; transform: translateX(0); }
+            }
+            .timeline-stone.wrong {
+                border-color: #e74c3c !important;
+                animation: shake-wrong 0.4s !important;
+            }
+        `;
+        document.head.appendChild(style);
+
+
+        window.selectPetroglyph = (taskIdx, id, type, element) => {
+            if (!petroglyphState[taskIdx]) {
+                petroglyphState[taskIdx] = { selected: null, matches: [] };
+            }
+
+            const state = petroglyphState[taskIdx];
+
+            // If already matched, ignore
+            if (state.matches.includes(id)) return;
+
+            // If nothing selected, select this
+            if (!state.selected) {
+                state.selected = { id, type, el: element };
+                element.classList.add('selected');
+                return;
+            }
+
+            // If same type clicked, deselect previous and select new
+            if (state.selected.type === type) {
+                state.selected.el.classList.remove('selected');
+                state.selected = { id, type, el: element };
+                element.classList.add('selected');
+                return;
+            }
+
+            // Different types - check if match
+            if (state.selected.id === id) {
+                // Match!
+                state.selected.el.classList.remove('selected');
+                state.selected.el.classList.add('matched');
+                element.classList.add('matched');
+
+                // Add checkmark
+                state.selected.el.innerHTML += '<span class="match-indicator">✓</span>';
+                element.innerHTML += '<span class="match-indicator">✓</span>';
+
+                state.matches.push(id);
+                state.selected = null;
+
+                // Check if all matched
+                const totalPairs = levelData.tasks[taskIdx].pairs.length;
+                if (state.matches.length === totalPairs) {
+                    setTimeout(() => completeTask(taskIdx), 1000);
+                }
+            } else {
+                // Wrong match - shake and reset
+                state.selected.el.classList.add('wrong');
+                element.classList.add('wrong');
+
+                setTimeout(() => {
+                    state.selected.el.classList.remove('selected', 'wrong');
+                    element.classList.remove('wrong');
+                    state.selected = null;
+                }, 500);
+            }
+        };
+
+        // --- NEW GAMES LOGIC ---
+
+        // CHOICE STORY
+        // --- FACT CHECKER (ARCHIVE) ---
+        let archiveStates = {};
+        window.checkFact = (idx, userChoice) => {
+            if (!archiveStates[idx]) archiveStates[idx] = { current: 0 };
+            const state = archiveStates[idx];
+            const task = levelData.tasks[idx];
+            const fact = task.facts[state.current];
+            const feedback = document.getElementById(`archive-feedback-${idx}`);
+            const folder = document.getElementById(`archive-folder-${idx}`);
+            const stampTruth = document.getElementById(`stamp-t-${idx}`);
+            const stampMyth = document.getElementById(`stamp-m-${idx}`);
+            const prog = document.getElementById(`archive-prog-${idx}`);
+
+            if (userChoice === fact.isTruth) {
+                // Correct
+                const stamp = fact.isTruth ? stampTruth : stampMyth;
+                stamp.style.animation = "stampPop 0.6s forwards";
+                feedback.innerHTML = `<span style="color:#27ae60;">✅ ${fact.info}</span>`;
+
+                setTimeout(() => {
+                    stamp.style.animation = "";
+                    state.current++;
+                    if (state.current < task.facts.length) {
+                        document.getElementById(`archive-text-${idx}`).innerText = task.facts[state.current].statement;
+                        prog.innerText = `Құжат ${state.current + 1} / ${task.facts.length}`;
+                        feedback.innerText = "";
+                        folder.style.transform = `rotate(${Math.random() * 4 - 2}deg) scale(0.95)`;
+                        setTimeout(() => folder.style.transform = `rotate(${Math.random() * 4 - 2}deg) scale(1)`, 200);
+                    } else {
+                        feedback.innerHTML = `<span style="color:#D4AF37;">📁 Мұрағат зерттелді! Шындық ашылды.</span>`;
+                        completeTask(idx);
+                    }
+                }, 1800);
+            } else {
+                // Wrong
+                feedback.innerHTML = `<span style="color:#e74c3c;">❌ Бұрыс! Бұл деректі қайта зерттеңіз.</span>`;
+                folder.style.animation = "shake 0.4s";
+                setTimeout(() => { folder.style.animation = ""; feedback.innerText = ""; }, 1500);
+            }
+        };
+
+        window.makeChoice = (idx, valid, el, info) => {
+            const infoEl = document.getElementById(`choice-info-${idx}`);
+            infoEl.innerText = info;
+            if (valid) {
+                el.classList.add('correct');
+                infoEl.style.color = "#4CAF50";
+                setTimeout(() => completeTask(idx), 1500);
+            } else {
+                el.classList.add('wrong');
+                infoEl.style.color = "#e74c3c";
+                setTimeout(() => el.classList.remove('wrong'), 800);
+            }
+        };
+
+        // --- STRATEGY BUILDER ---
+        let strategyState = {};
+        window.selectStrategy = (idx, catId, optId) => {
+            if (!strategyState[idx]) strategyState[idx] = {};
+            strategyState[idx][catId] = optId;
+
+            // Update UI
+            document.querySelectorAll(`#card-${idx} .strategy-option[id^="opt-${idx}-${catId}-"]`).forEach(el => {
+                el.classList.remove('selected');
+            });
+            document.getElementById(`opt-${idx}-${catId}-${optId}`).classList.add('selected');
+        }
+
+        window.executeStrategy = (idx) => {
+            const task = levelData.tasks[idx];
+            const current = strategyState[idx] || {};
+            const correct = task.correctCombo;
+            const feedback = document.getElementById(`strategy-feedback-${idx}`);
+
+            // Check if all selected
+            if (!current.terrain || !current.tactic || !current.unit) {
+                feedback.innerText = "⚠️ Барлық параметрлерді таңдаңыз (Жер, Тәсіл, Күш)";
+                feedback.style.color = "#FFD700";
+                return;
+            }
+
+            const isCorrect = current.terrain === correct.terrain &&
+                current.tactic === correct.tactic &&
+                current.unit === correct.unit;
+
+            if (isCorrect) {
+                feedback.innerText = task.feedback.success;
+                feedback.style.color = "#4CAF50";
+                setTimeout(() => completeTask(idx), 2000);
+            } else {
+                feedback.innerText = task.feedback.fail;
+                feedback.style.color = "#e74c3c";
+
+                // Shake the failed message or items
+                const container = document.querySelector(`#card-${idx} .strategy-container`);
+                container.style.animation = "shake 0.4s";
+                setTimeout(() => container.style.animation = "", 400);
+            }
+        }
+
+        // --- BATTLE COMMANDER ---
+        let battleState = {};
+
+        window.executeCommand = (idx, stepId, order) => {
+            if (!battleState[idx]) battleState[idx] = { currentStep: 1 };
+
+            const state = battleState[idx];
+            const statusEl = document.getElementById(`battle-status-${idx}`);
+            const hero = document.getElementById(`hero-${idx}`);
+            const enemy = document.getElementById(`enemy-${idx}`);
+            const effect = document.getElementById(`effect-${idx}`);
+            const btn = document.getElementById(`cmd-${idx}-${stepId}`);
+
+            if (order === state.currentStep) {
+                // Correct Step
+                btn.classList.add('done');
+                state.currentStep++;
+
+                if (stepId === 'attack') {
+                    statusEl.innerText = "⚔️ Шабуыл жасалып, жаудың назары аударылды!";
+                    statusEl.style.color = "#FFD700";
+                    hero.style.animation = "attackAnim 1s ease forwards";
+                }
+                else if (stepId === 'retreat') {
+                    statusEl.innerText = "🐎 Алдамшы шегіну! Жау тұзаққа кірді!";
+                    hero.style.left = "5%"; // Move back
+                    enemy.style.right = "50%"; // Enemy follows to center
+                }
+                else if (stepId === 'ambush') {
+                    statusEl.innerText = "🏹 Қоршау! Жеңіс біздікі!";
+                    statusEl.style.color = "#4CAF50";
+                    document.getElementById(`ambush-top-${idx}`).style.top = "20px";
+                    document.getElementById(`ambush-bottom-${idx}`).style.bottom = "20px";
+
+                    setTimeout(() => {
+                        effect.style.animation = "boom 0.5s ease-out";
+                        enemy.style.opacity = "0"; // Destroy enemy
+                        setTimeout(() => completeTask(idx), 1500);
+                    }, 1000);
+                }
+
+            } else {
+                // Wrong Step
+                statusEl.innerText = "⚠️ Қате бұйрық! Тактика бұзылды.";
+                statusEl.style.color = "#e74c3c";
+                btn.style.animation = "shake 0.4s";
+                setTimeout(() => btn.style.animation = "", 400);
+            }
+        };
+
+        // ORDERING (Legacy support if needed, but we replaced it)
+        let orderState = {};
+        window.pickOrder = (idx, order, el) => {
+            // Re-implementing as click-to-order for stability
+            if (!orderState[idx]) orderState[idx] = { current: 1 };
+            if (order === orderState[idx].current) {
+                el.style.borderColor = "#4CAF50";
+                el.style.opacity = "0.5";
+                el.style.pointerEvents = "none";
+                orderState[idx].current++;
+                const total = levelData.tasks[idx].items.length;
+                if (orderState[idx].current > total) {
+                    document.getElementById(`order-status-${idx}`).innerText = "Дұрыс! Тактика сәтті орындалды.";
+                    document.getElementById(`order-status-${idx}`).style.color = "#4CAF50";
+                    completeTask(idx);
+                }
+            } else {
+                el.style.animation = "shake 0.4s";
+                setTimeout(() => el.style.animation = "", 400);
+            }
+        };
+        // Update rendering for ordering to use pickOrder
+        // Wait, I should have updated the HTML generation too. Let me do that in a follow-up if needed.
+        // For now I'll just adapt the JS to what's in the HTML or fix the HTML.
+
+        // RUNE DECODE
+        let runeState = {};
+        window.pressRune = (idx, char, rune) => {
+            if (!runeState[idx]) runeState[idx] = { typed: "" };
+            const target = levelData.tasks[idx].target;
+            const currentIdx = runeState[idx].typed.length;
+
+            if (target[currentIdx] === char) {
+                runeState[idx].typed += char;
+                document.getElementById(`rune-${idx}-${currentIdx}`).innerText = rune;
+                document.getElementById(`rune-${idx}-${currentIdx}`).style.color = "#4CAF50";
+                if (runeState[idx].typed === target) {
+                    setTimeout(() => completeTask(idx), 1000);
+                }
+            } else {
+                // Shake slots
+                for (let i = 0; i < target.length; i++) {
+                    const slot = document.getElementById(`rune-${idx}-${i}`);
+                    if (slot.innerText === "?") {
+                        slot.style.animation = "shake 0.4s";
+                        setTimeout(() => slot.style.animation = "", 400);
+                    }
+                }
+            }
+        };
+
+        // DIPLOMATIC TRADE
+        let tradeState = {};
+        window.giveGift = (idx, gIdx, gift, correct) => {
+            if (!tradeState[idx]) tradeState[idx] = { count: 0 };
+            const row = document.getElementById(`gifts-${idx}-${gIdx}`);
+            const task = levelData.tasks[idx];
+            const guest = task.guests[gIdx];
+
+            if (gift === correct) {
+                row.innerHTML = `<span style="color:#4CAF50; font-weight:bold; font-size:0.9rem; text-align:right;">🤝 Одақ бекіді! <br> <small style="color:#aaa; font-style:italic;">"${guest.response}"</small></span>`;
+                tradeState[idx].count++;
+                if (tradeState[idx].count === levelData.tasks[idx].guests.length) {
+                    setTimeout(() => completeTask(idx), 2000);
+                }
+            } else {
+                row.style.animation = "shake 0.4s";
+                setTimeout(() => row.style.animation = "", 400);
+            }
+        };
+
+        // ARTIFACT COLLECTION
+        let artifactState = {};
+        window.collectArtifact = (idx, valid, el) => {
+            if (!artifactState[idx]) artifactState[idx] = { collected: 0 };
+            if (el.classList.contains('collected')) return;
+
+            if (valid) {
+                el.classList.add('collected');
+                artifactState[idx].collected++;
+                document.getElementById(`artifact-status-${idx}`).innerText = `Құнды жәдігерлерді жинаңыз: ${artifactState[idx].collected}/3`;
+                if (artifactState[idx].collected === 3) {
+                    document.getElementById(`artifact-status-${idx}`).style.color = "#4CAF50";
+                    setTimeout(() => completeTask(idx), 1000);
+                }
+            } else {
+                el.style.animation = "shake 0.4s";
+                setTimeout(() => el.style.animation = "", 400);
+            }
+        };
+
+        // CEREMONY ORDER
+        let ceremonyState = {};
+        window.pickCeremonyStep = (idx, order, el) => {
+            if (!ceremonyState[idx]) ceremonyState[idx] = { next: 1 };
+            if (order === ceremonyState[idx].next) {
+                el.classList.add('correct');
+                el.style.pointerEvents = "none";
+                ceremonyState[idx].next++;
+                if (ceremonyState[idx].next > levelData.tasks[idx].steps.length) {
+                    document.getElementById(`ceremony-status-${idx}`).innerText = "Хан ақ киізге көтерілді! ✓";
+                    document.getElementById(`ceremony-status-${idx}`).style.color = "#4CAF50";
+                    setTimeout(() => completeTask(idx), 1500);
+                }
+            } else {
+                el.classList.add('wrong');
+                setTimeout(() => el.classList.remove('wrong'), 500);
+            }
+        };
+
+        // MIGRATION PATH
+        let pathState_mig = {};
+        // --- JUSTICE COURT ---
+        let justiceStates = {};
+        window.showJusticeCase = (taskIdx, caseIdx) => {
+            const root = document.getElementById(`justice-root-${taskIdx}`);
+            const task = levelData.tasks[taskIdx];
+            const c = task.cases[caseIdx];
+
+            root.innerHTML = `
+                <div class="law-scroll">
+                    <div style="font-size:3rem; filter: drop-shadow(2px 2px 0px rgba(0,0,0,0.2));">${c.icon}</div>
+                    <div>${c.crime}</div>
+                </div>
+                <div class="verdict-grid">
+                    ${c.options.map((opt, oIdx) => `
+                        <button class="verdict-btn" onclick="pickVerdict(${taskIdx}, ${caseIdx}, ${oIdx})">
+                            <div class="v-icon">${opt.icon}</div>
+                            <div style="font-size:0.9rem; font-weight:bold;">${opt.text}</div>
+                        </button>
+                    `).join('')}
+                </div>
+                <div id="justice-feedback-${taskIdx}" class="justice-feedback"></div>
+            `;
+        };
+
+        window.pickVerdict = (taskIdx, caseIdx, oIdx) => {
+            const task = levelData.tasks[taskIdx];
+            const c = task.cases[caseIdx];
+            const opt = c.options[oIdx];
+            const feedback = document.getElementById(`justice-feedback-${taskIdx}`);
+
+            if (opt.correct) {
+                feedback.innerHTML = `<span style="color:#4CAF50;">✅ ${opt.info}</span>`;
+                feedback.animate([{ transform: 'scale(0.9)' }, { transform: 'scale(1)' }], { duration: 300 });
+
+                setTimeout(() => {
+                    if (caseIdx + 1 < task.cases.length) {
+                        showJusticeCase(taskIdx, caseIdx + 1);
+                    } else {
+                        feedback.innerHTML = `<span style="color:#D4AF37; font-size:1.2rem;">⚖️ Дана Би! Халық риза!</span>`;
+                        completeTask(taskIdx);
+                    }
+                }, 2000);
+            } else {
+                feedback.innerHTML = `<span style="color:#e74c3c;">❌ ${opt.info}</span>`;
+                feedback.animate([{ transform: 'translateX(-10px)' }, { transform: 'translateX(10px)' }, { transform: 'translateX(0)' }], { duration: 300 });
+            }
+        };
+
+        // --- MIGRATION PATH (KOSH) ---
+        let koshStates = {};
+        window.stepKosh = (idx, stepIdx) => {
+            if (!koshStates[idx]) koshStates[idx] = { current: 0 };
+            const state = koshStates[idx];
+            const task = levelData.tasks[idx];
+            const nodeEl = document.getElementById(`node-${idx}-${stepIdx}`);
+            const progressEl = document.getElementById(`kosh-progress-${idx}`);
+            const statusEl = document.getElementById(`kosh-status-${idx}`);
+
+            if (stepIdx === state.current) {
+                nodeEl.classList.add('completed');
+                state.current++;
+
+                // Update progress line
+                const percent = (state.current / task.nodes.length) * 100;
+                progressEl.style.height = percent + '%';
+
+                if (state.current === task.nodes.length) {
+                    statusEl.innerHTML = `<span style="color:#D4AF37;">🇰🇿 Қазақ хандығы құрылды! Мәңгілік ел!</span>`;
+                    completeTask(idx);
+                } else {
+                    statusEl.innerText = "Келесі қадамды таңдаңыз...";
+                }
+            } else if (stepIdx < state.current) {
+                // Already completed
+            } else {
+                // Wrong step
+                nodeEl.style.animation = "shake 0.4s";
+                statusEl.innerText = "Бұл әлі ерте! Тарихты ретімен орындаңыз.";
+                statusEl.style.color = "#e74c3c";
+                setTimeout(() => {
+                    statusEl.innerText = "Көш бағытын ретімен таңдаңыз";
+                    statusEl.style.color = "#FFD700";
+                    nodeEl.style.animation = "";
+                }, 1500);
+            }
+        };
+
+        window.stepPath = (idx, stepIdx, el) => {
+            if (!pathState_mig[idx]) pathState_mig[idx] = { current: 0 };
+            if (stepIdx === pathState_mig[idx].current) {
+                el.classList.add('correct');
+                el.style.pointerEvents = "none";
+                pathState_mig[idx].current++;
+                if (pathState_mig[idx].current === levelData.tasks[idx].path.length) {
+                    document.getElementById(`path-status-${idx}`).innerText = "Көш межелі жерге жетті! 🏳️";
+                    document.getElementById(`path-status-${idx}`).style.color = "#4CAF50";
+                    setTimeout(() => completeTask(idx), 1500);
+                }
+            } else {
+                el.classList.add('wrong');
+                setTimeout(() => el.classList.remove('wrong'), 500);
+            }
+        };
+
+        // ARCHITECTURE QUEST
+        let archState = {};
+        // ARCHITECTURE QUEST (Drag & Drop)
+        window.dragLandmark = (ev, id) => {
+            ev.dataTransfer.setData("text", id);
+        };
+
+        window.dropLandmark = (ev, idx, targetId) => {
+            ev.preventDefault();
+            const id = ev.dataTransfer.getData("text");
+            const slot = ev.currentTarget;
+            unhighlightZone(slot);
+
+            if (id === targetId) {
+                const landmarkCard = document.getElementById(`landmark-${idx}-${id}`);
+                const task = levelData.tasks[idx];
+                const landmark = task.landmarks.find(l => l.id === id);
+
+                landmarkCard.classList.add('selected'); // Dims the choice
+                slot.classList.add('filled');
+                slot.innerHTML = `<div style="font-size:2.5rem; filter: drop-shadow(0 0 10px #FFD700); animation: popIn 0.3s ease;">${landmark.icon}</div>`;
+
+                if (!archState[idx]) archState[idx] = { count: 0 };
+                archState[idx].count++;
+
+                if (archState[idx].count === task.landmarks.length) {
+                    setTimeout(() => completeTask(idx), 1000);
+                }
+            } else {
+                // Wrong slot feedback
+                slot.style.animation = "shake 0.4s";
+                setTimeout(() => slot.style.animation = "", 400);
+            }
+        };
+
+        // --- GAME LOGIC SEQUENCE ---
+        window.dragLogic = (ev, id) => {
+            ev.dataTransfer.setData("text", id);
+            ev.dataTransfer.setData("sourceId", ev.target.id);
+        };
+
+        window.dropLogic = (ev, idx, slotIndex) => {
+            ev.preventDefault();
+            const id = ev.dataTransfer.getData("text");
+            const sourceEl = document.getElementById(`logic-${idx}-${id}`);
+            const slot = ev.target;
+
+            // Check if dropped into a slot
+            if (slot.classList.contains('logic-slot') && slot.children.length === 0) {
+                slot.appendChild(sourceEl);
+                checkLogicSequence(idx);
+            }
+            // Optional: allow dragging back to pool? (The pool is not a slot, so preventing drop might be easiest logic)
+        };
+
+        window.allowDrop = (ev) => {
+            ev.preventDefault();
+        };
+
+        window.checkLogicSequence = (idx) => {
+            const task = levelData.tasks[idx];
+            const slots = document.querySelectorAll(`#card-${idx} .logic-slot`);
+            let currentOrder = [];
+
+            slots.forEach(slot => {
+                if (slot.children.length > 0) {
+                    const itemId = slot.children[0].id.split('-').pop(); // logic-idx-id
+                    currentOrder.push(itemId);
+                } else {
+                    currentOrder.push(null);
+                }
+            });
+
+            if (currentOrder.includes(null)) return; // Not full yet
+
+            const isCorrect = currentOrder.every((val, index) => val === task.correctOrder[index]);
+            const feedback = document.getElementById(`logic-feedback-${idx}`);
+
+            if (isCorrect) {
+                feedback.innerHTML = "🔓 Құпия ашылды! Есік ашық!";
+                feedback.style.color = "#4CAF50";
+                setTimeout(() => completeTask(idx), 1000);
+            } else {
+                feedback.innerText = "❌ Қате код! Жазбаны мұқият оқыңыз.";
+                feedback.style.color = "#e74c3c";
+                feedback.style.animation = "shake 0.4s";
+                setTimeout(() => feedback.style.animation = "", 400);
+                setTimeout(() => {
+                    // Return items to pool
+                    const pool = document.querySelector(`#card-${idx} .items-pool`);
+                    slots.forEach(slot => {
+                        if (slot.firstChild) pool.appendChild(slot.firstChild);
+                    });
+                    feedback.innerText = "";
+                }, 2000);
+            }
+        };
+
+        // --- ARMY HIERARCHY ---
+        window.dragHierarchy = (ev, id) => {
+            ev.dataTransfer.setData("text", id);
+        };
+
+        window.dropHierarchy = (ev, idx, slotIndex) => {
+            ev.preventDefault();
+            const id = ev.dataTransfer.getData("text");
+            const sourceEl = document.getElementById(`army-${idx}-${id}`);
+            const slot = ev.currentTarget;
+
+            if (slot.classList.contains('hierarchy-slot') && slot.children.length <= 1) { // 1 is for slot-label
+                slot.appendChild(sourceEl);
+                checkHierarchy(idx);
+            }
+        };
+
+        window.checkHierarchy = (idx) => {
+            const task = levelData.tasks[idx];
+            const slots = document.querySelectorAll(`#card-${idx} .hierarchy-slot`);
+            let currentOrder = [];
+
+            // We reverse because displayed top-to-bottom but logic might be 0 to 3
+            // slots are 0, 1, 2, 3 (onbase is first in correctOrder)
+            slots.forEach(slot => {
+                const item = slot.querySelector('.hierarchy-item');
+                if (item) {
+                    currentOrder.push(item.id.split('-').pop());
+                } else {
+                    currentOrder.push(null);
+                }
+            });
+
+            // The HTML reverse() means the first slot in DOM is index 3 (Tumenbase)
+            // Let's just map them correctly
+            const finalOrder = Array.from(slots).map(s => {
+                const item = s.querySelector('.hierarchy-item');
+                return item ? item.id.split('-').pop() : null;
+            }).reverse(); // Now it's [onbase, zhuzbase, mynbase, tumenbase]
+
+            if (finalOrder.includes(null)) return;
+
+            const isCorrect = finalOrder.every((val, index) => val === task.correctOrder[index]);
+            const feedback = document.getElementById(`hierarchy-feedback-${idx}`);
+
+            if (isCorrect) {
+                feedback.innerHTML = "⚔️ Дұрыс! Қағанат әскері темірдей тәртіпке негізделген.";
+                feedback.style.color = "#4CAF50";
+                setTimeout(() => completeTask(idx), 2000);
+            } else {
+                feedback.innerText = "❌ Қате реттілік. Ірі бөлімшелер жоғарыда болуы керек.";
+                feedback.style.color = "#e74c3c";
+                feedback.style.animation = "shake 0.4s";
+                setTimeout(() => feedback.style.animation = "", 400);
+                setTimeout(() => {
+                    const pool = document.querySelector(`#card-${idx} .hierarchy-pool`);
+                    slots.forEach(slot => {
+                        const item = slot.querySelector('.hierarchy-item');
+                        if (item) pool.appendChild(item);
+                    });
+                    feedback.innerText = "";
+                }, 2500);
+            }
+        };
+
+        // --- COMPLETION ---
+        let totalScore = parseInt(localStorage.getItem('tarx_score')) || 0;
+        document.getElementById('global-score').innerText = totalScore;
+
+        // Start Story Guide
+        setTimeout(() => showGuide(currentLevel), 500);
+
+        window.completeTask = (idx) => {
+            setTimeout(() => {
+                const c = document.getElementById(`card-${idx}`);
+                if (!c || c.classList.contains('completed')) return;
+                c.classList.add('completed'); c.classList.remove('active');
+
+                // --- SCORE LOGIC ---
+                const levelPoints = currentLevel === 7 ? [30, 30, 40] : [14, 14, 14]; // Adjusting for 100 total
+                // Correcting math to reach 100 exactly: 14*6 = 84, 100-84 = 16 for Level 7
+                // Let's use simpler distribution: 14 per level-set.
+                const pts = (currentLevel === 7) ? (idx === 2 ? 6 : 5) : (idx === 0 ? 4 : 5);
+                // Wait, per level: 4+5+5 = 14. 14*6 = 84. Level 7: 5+5+6 = 16. Total 100.
+
+                addScore(pts, c);
+
+                const n = document.getElementById(`card-${idx + 1}`);
+                if (n) {
+                    n.classList.add('active');
+                    n.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                else {
+                    const modal = document.getElementById('success-modal');
+                    const title = document.getElementById('modal-title');
+                    const desc = document.getElementById('modal-desc');
+                    const badge = document.getElementById('achievement-badge');
+
+                    if (currentLevel === 7) {
+                        title.innerText = "АЛТЫН ДӘУІР САҚШЫСЫ!";
+                        desc.innerHTML = `
+                            <div style="background: rgba(212, 175, 55, 0.1); padding: 20px; border: 1px dashed #D4AF37; border-radius: 15px; margin-top: 20px;">
+                                <h2 style="color:#FFD700; margin-bottom:10px;">Құттықтаймыз, жас зерттеуші!</h2>
+                                <p style="line-height:1.6; font-size:1.1rem; color:#f5f5dc;">
+                                    Сен Тас дәуірінен бастап Тәуелсіз Қазақстанға дейінгі айбынды тарих жолын толық зерттеп шықтың. 
+                                    Әрбір кезеңнің құпиясын ашып, бабалар аманатын ұғындың. Енді сен — Отан тарихының нағыз білгірісің!
+                                </p>
+                            </div>
+                        `;
+                        badge.style.display = 'block';
+                    } else {
+                        title.innerText = "ДӘУІР БАҒЫНДЫРЫЛДЫ!";
+                        desc.innerText = `${levelData.title} кезеңінің барлық тапсырмаларын сәтті орындадың. Тарихи сапарың жалғасуда!`;
+                    }
+                    modal.style.display = 'flex';
+                }
+            }, 500);
+        }
+
+        window.addScore = (pts, element) => {
+            // Fire effect popup
+            const rect = element.getBoundingClientRect();
+            const popup = document.createElement('div');
+            popup.className = 'points-anim';
+            popup.innerHTML = `<span>🔥</span> +${pts}`;
+            popup.style.left = `${rect.left + rect.width / 2}px`;
+            popup.style.top = `${rect.top + rect.height / 2}px`;
+            document.body.appendChild(popup);
+            setTimeout(() => popup.remove(), 1500);
+
+            // Update Total
+            totalScore += pts;
+            localStorage.setItem('tarx_score', totalScore);
+
+            // Animate Score Counter
+            const display = document.getElementById('global-score');
+            setTimeout(() => {
+                display.innerText = totalScore;
+                display.classList.add('score-change');
+                setTimeout(() => display.classList.remove('score-change'), 500);
+            }, 800);
+        }
+
+        window.finishLevel = () => {
+            let max = parseInt(localStorage.getItem('tarx_max_level')) || 1;
+            if (currentLevel >= max) localStorage.setItem('tarx_max_level', currentLevel + 1);
+            window.location.href = 'game.html';
+        }
+    </script>
+</body>
+
+</html>

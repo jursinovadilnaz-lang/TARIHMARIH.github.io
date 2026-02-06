@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="kk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ТАРИХ: Уақытқа Саяхат</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Montserrat:wght@400;600;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --color-gold: #D4AF37;
+            --color-cream: #F5F5DC;
+            --color-earth: #3E2723;
+            --color-sky: #4FC3F7;
+            --overlay-bg: rgba(44, 24, 16, 0.85);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #1a0f0a;
+            color: var(--color-cream);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0L20 8L8 20L0 0Z' fill='%23D4AF37' stroke='%231a0f0a' stroke-width='1.5'/%3E%3C/svg%3E") 0 0, auto;
+        }
+
+        a,
+        button,
+        .clickable {
+            cursor: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0L20 8L8 20L0 0Z' fill='%23FFD700' stroke='%231a0f0a' stroke-width='1.5'/%3E%3C/svg%3E") 0 0, pointer;
+        }
+
+        .bg-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background-color: #000;
+        }
+
+        .bg-image {
+            width: 100%;
+            height: 100%;
+            background-image: url('OY/фотофон.jpg');
+            background-size: cover;
+            background-position: center;
+            /* Integrating image seamlessly */
+            filter: sepia(0.3) contrast(1.1) brightness(0.7);
+        }
+
+        /* ANIMATED DECORATIVE ELEMENTS */
+        .decorative-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 5;
+        }
+
+        /* Floating Particles */
+        .particle {
+            position: absolute;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.6), transparent);
+            border-radius: 50%;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .particle:nth-child(1) {
+            width: 8px;
+            height: 8px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .particle:nth-child(2) {
+            width: 12px;
+            height: 12px;
+            top: 60%;
+            left: 80%;
+            animation-delay: 2s;
+        }
+
+        .particle:nth-child(3) {
+            width: 6px;
+            height: 6px;
+            top: 40%;
+            left: 30%;
+            animation-delay: 4s;
+        }
+
+        .particle:nth-child(4) {
+            width: 10px;
+            height: 10px;
+            top: 80%;
+            left: 60%;
+            animation-delay: 6s;
+        }
+
+        .particle:nth-child(5) {
+            width: 7px;
+            height: 7px;
+            top: 15%;
+            left: 70%;
+            animation-delay: 8s;
+        }
+
+        .particle:nth-child(6) {
+            width: 9px;
+            height: 9px;
+            top: 50%;
+            left: 15%;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.3;
+            }
+
+            25% {
+                transform: translate(30px, -50px) scale(1.2);
+                opacity: 0.6;
+            }
+
+            50% {
+                transform: translate(-20px, -100px) scale(0.8);
+                opacity: 0.4;
+            }
+
+            75% {
+                transform: translate(40px, -70px) scale(1.1);
+                opacity: 0.5;
+            }
+        }
+
+        /* Ornamental Patterns */
+        .ornament {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            opacity: 0.15;
+            animation: rotate 30s linear infinite;
+        }
+
+        .ornament:nth-child(7) {
+            top: 10%;
+            left: 5%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 0 L60 40 L100 50 L60 60 L50 100 L40 60 L0 50 L40 40 Z' fill='%23D4AF37'/%3E%3C/svg%3E");
+            background-size: contain;
+        }
+
+        .ornament:nth-child(8) {
+            bottom: 15%;
+            right: 8%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='50' cy='50' r='20' fill='none' stroke='%23D4AF37' stroke-width='2'/%3E%3Ccircle cx='50' cy='50' r='35' fill='none' stroke='%23D4AF37' stroke-width='1'/%3E%3C/svg%3E");
+            background-size: contain;
+            animation-direction: reverse;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Glowing Stars */
+        .star {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #FFD700;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #FFD700;
+            animation: twinkle 3s infinite ease-in-out;
+        }
+
+        .star:nth-child(9) {
+            top: 25%;
+            left: 20%;
+            animation-delay: 0s;
+        }
+
+        .star:nth-child(10) {
+            top: 70%;
+            left: 85%;
+            animation-delay: 1s;
+        }
+
+        .star:nth-child(11) {
+            top: 35%;
+            left: 90%;
+            animation-delay: 2s;
+        }
+
+        .star:nth-child(12) {
+            top: 85%;
+            left: 25%;
+            animation-delay: 1.5s;
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: 0.2;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.5);
+            }
+        }
+
+
+        .game-card {
+            position: relative;
+            z-index: 10;
+            width: 90%;
+            max-width: 700px;
+            padding: 60px 20px;
+            text-align: center;
+
+            /* Enhanced background with radial glow */
+            background: radial-gradient(circle at center, rgba(60, 40, 30, 0.95), rgba(30, 20, 15, 0.85));
+            backdrop-filter: blur(8px);
+
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 20px;
+            box-shadow:
+                0 30px 60px rgba(0, 0, 0, 0.6),
+                inset 0 0 100px rgba(212, 175, 55, 0.05);
+            /* Inner glow */
+            animation: fadeUp 1s ease-out;
+            overflow: hidden;
+        }
+
+        /* DECORATIVE ELEMENTS INSIDE CARD */
+        .card-decorations {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            /* Behind text */
+        }
+
+        /* Content wrapper to be above decorations */
+        .card-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes fadeUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* --- TITLE STYLES --- */
+        .main-title {
+            font-family: 'Cinzel', serif;
+            /* Consistent Font */
+            font-size: 6.5rem;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            color: var(--color-gold);
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            min-height: 1.2em;
+        }
+
+        .char-box {
+            display: inline-block;
+            width: 1.2em;
+            text-align: center;
+            /* Ensure fixed width/height to avoid layout jitter */
+            position: relative;
+        }
+
+        /* CHAOS STATE */
+        .roman-mode {
+            color: #FFECB3;
+            opacity: 0.6;
+            transform: scale(0.9);
+            /* Subtle vibration */
+            animation: vibe 0.05s infinite alternate;
+        }
+
+        @keyframes vibe {
+            from {
+                transform: translate(0, 0) scale(0.9);
+            }
+
+            to {
+                transform: translate(1px, 1px) scale(0.92);
+            }
+        }
+
+        /* FINAL STATE */
+        .final-reveal {
+            color: #D4AF37;
+            opacity: 1;
+            transform: scale(1);
+            animation: lockIn 0.3s ease-out forwards;
+            text-shadow: 0 0 30px #FFD700;
+        }
+
+        @keyframes lockIn {
+            0% {
+                transform: scale(1.4);
+                color: #fff;
+            }
+
+            100% {
+                transform: scale(1);
+                color: #D4AF37;
+            }
+        }
+
+        .description {
+            font-size: 1.05rem;
+            line-height: 1.9;
+            margin-bottom: 40px;
+            color: #e8dcc4;
+            font-weight: 400;
+            max-width: 520px;
+            margin-left: auto;
+            margin-right: auto;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+            letter-spacing: 0.5px;
+            padding: 20px 30px;
+            position: relative;
+
+            /* Decorative borders */
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+
+            /* Subtle background */
+            background: linear-gradient(to bottom,
+                    transparent,
+                    rgba(212, 175, 55, 0.03),
+                    transparent);
+        }
+
+        /* Decorative corner ornaments */
+        .description::before,
+        .description::after {
+            content: '◆';
+            position: absolute;
+            color: rgba(212, 175, 55, 0.4);
+            font-size: 0.7rem;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .description::before {
+            left: 5px;
+        }
+
+        .description::after {
+            right: 5px;
+        }
+
+        .play-btn {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            padding: 16px 50px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #2C1810;
+            /* Gold gradient matching TARIKH title */
+            background: linear-gradient(135deg, #D4AF37, #F9A825);
+            border: 1px solid #B8860B;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        /* Ripple Wave Effect */
+        .play-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .play-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .play-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.5);
+            filter: brightness(1.1);
+        }
+
+        .play-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        @media (max-width: 600px) {
+            .loader-logo {
+                font-size: 3rem !important;
+                letter-spacing: 5px !important;
+            }
+
+            .loader-text {
+                font-size: 0.9rem !important;
+                padding: 0 20px;
+            }
+
+            .main-title {
+                font-size: 2.2rem !important;
+                gap: 5px;
+                margin-bottom: 25px !important;
+            }
+
+            .char-box {
+                width: 45px !important;
+                height: 60px !important;
+            }
+
+            .description {
+                font-size: 0.9rem !important;
+                padding: 15px 20px !important;
+                margin-bottom: 30px !important;
+                line-height: 1.6 !important;
+            }
+
+            .game-card {
+                padding: 30px 15px !important;
+                width: 95% !important;
+            }
+
+            .play-btn {
+                padding: 14px 40px !important;
+                font-size: 1rem !important;
+            }
+        }
+
+        /* LOADING SCREEN */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0503;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease-in-out;
+            cursor: none;
+            /* Hide cursor during loading */
+        }
+
+        .loader-content {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .loader-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 5rem;
+            font-weight: 900;
+            background: linear-gradient(to bottom, #FFD700, #D4AF37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.4));
+            animation: pulseLogo 2s infinite ease-in-out;
+            letter-spacing: 10px;
+        }
+
+        .loader-line {
+            width: 0;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #D4AF37, transparent);
+            animation: expandLine 1.5s forwards ease-in-out;
+        }
+
+        .loader-text {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            color: #D4AF37;
+            opacity: 0;
+            letter-spacing: 3px;
+            animation: fadeInText 1s forwards ease-in-out 0.8s;
+        }
+
+        @keyframes pulseLogo {
+
+            0%,
+            100% {
+                transform: scale(1);
+                filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.4));
+            }
+
+            50% {
+                transform: scale(1.05);
+                filter: drop-shadow(0 0 40px rgba(212, 175, 55, 0.7));
+            }
+        }
+
+        @keyframes expandLine {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 300px;
+            }
+        }
+
+        @keyframes fadeInText {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="loading-screen">
+        <div class="loader-content">
+            <div class="loader-logo">ТАРИХ</div>
+            <div class="loader-line"></div>
+            <p class="loader-text">Тарихты білу — болашаққа жол...</p>
+        </div>
+    </div>
+    <div class="bg-wrapper">
+        <div class="bg-image"></div>
+    </div>
+
+    <main class="game-card">
+        <!-- Animated Decorative Elements INSIDE CARD -->
+        <div class="card-decorations">
+            <!-- Floating Particles -->
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+
+            <!-- Ornamental Patterns -->
+            <div class="ornament"></div>
+            <div class="ornament"></div>
+
+            <!-- Glowing Stars -->
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+        </div>
+
+        <!-- Content on top of decorations -->
+        <div class="card-content">
+            <h1 class="main-title" id="animated-title">
+                <span class="char-box"></span>
+                <span class="char-box"></span>
+                <span class="char-box"></span>
+                <span class="char-box"></span>
+                <span class="char-box"></span>
+            </h1>
+
+            <p class="description">
+                7 дәуір. 7 тапсырма. Бір ұлы саяхат.<br>
+                Қазақстан тарихын интерактивті түрде зерттеңіз.
+            </p>
+
+            <button id="start-btn" class="play-btn">
+                Бастау
+            </button>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const spans = document.querySelectorAll('.char-box');
+
+            // TARGET WORD
+            const targetWord = ['Т', 'А', 'Р', 'И', 'Х'];
+
+            // CUSTOM POOLS FOR EACH LETTER (To look similar)
+            const pools = [
+                "TIY71",   // Simulating Т
+                "A4VΔΛ",   // Simulating А
+                "PRFBΓ",   // Simulating Р
+                "NUHΠΙ",   // Simulating И
+                "XKHЖЧ"    // Simulating Х
+            ];
+
+            const intervals = [];
+
+            // 1. START CHAOS
+            spans.forEach((span, i) => {
+                span.classList.add('roman-mode');
+
+                // Use the specific pool for this index
+                const chars = pools[i];
+
+                const id = setInterval(() => {
+                    span.innerText = chars[Math.floor(Math.random() * chars.length)];
+                }, 100); // Balanced flickering speed
+                intervals.push(id);
+            });
+
+            // 2. STOP SEQUENTIALLY
+            spans.forEach((span, index) => {
+                // First letter stops at 1000ms, then +800ms for each (Total ~5s)
+                const stopTime = 1000 + (index * 800);
+
+                setTimeout(() => {
+                    clearInterval(intervals[index]);
+                    span.classList.remove('roman-mode');
+                    span.classList.add('final-reveal');
+
+                    // Force the correct letter at the end
+                    span.innerText = targetWord[index];
+                }, stopTime);
+            });
+
+            // Button Logic with Sound Effect
+            const btn = document.getElementById('start-btn');
+            const card = document.querySelector('.game-card');
+
+            // Giggle Sound Effect (Female voice-like)
+            function playClickSound() {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+                // Create a pleasant "giggle" sound with multiple tones
+                const times = [0, 0.08, 0.16]; // Three quick notes
+                const frequencies = [600, 750, 900]; // Rising pitch (playful)
+
+                times.forEach((time, i) => {
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+
+                    // Soft, pleasant tone
+                    oscillator.frequency.value = frequencies[i];
+                    oscillator.type = 'sine';
+
+                    // Quick fade in/out for each note
+                    const startTime = audioContext.currentTime + time;
+                    gainNode.gain.setValueAtTime(0, startTime);
+                    gainNode.gain.linearRampToValueAtTime(0.15, startTime + 0.02);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.08);
+
+                    oscillator.start(startTime);
+                    oscillator.stop(startTime + 0.1);
+                });
+            }
+
+            btn.addEventListener('click', () => {
+                // Play sound
+                playClickSound();
+
+                // Visual transition
+                card.style.transition = 'all 0.5s ease-in';
+                card.style.transform = 'scale(0.95) translateY(-10px)';
+                card.style.opacity = '0';
+                setTimeout(() => { window.location.href = 'game.html'; }, 500);
+            });
+
+            // Handle Loading Screen
+            window.addEventListener('load', () => {
+                const loader = document.getElementById('loading-screen');
+                setTimeout(() => {
+                    loader.style.opacity = '0';
+                    setTimeout(() => {
+                        loader.style.display = 'none';
+                    }, 800);
+                }, 2000); // 2s for premium feel
+            });
+        });
+    </script>
+</body>
+
+</html>

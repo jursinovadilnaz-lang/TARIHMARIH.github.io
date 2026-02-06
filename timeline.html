@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="kk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ТАРИХ: Тарихи Хронология</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Montserrat:wght@400;600;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --color-gold: #D4AF37;
+            --color-cream: #F5F5DC;
+            --color-earth: #3E2723;
+            --color-sky: #4FC3F7;
+
+            --lvl-stone: #8D6E63;
+            --lvl-bronze: #F9A825;
+            --lvl-iron: #5D4037;
+            --lvl-turk: #1565C0;
+            --lvl-khan: #D4AF37;
+            --lvl-soviet: #D32F2F;
+            --lvl-kz: #00897B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #0a0505 0%, #1a0f0a 50%, #2c1810 100%);
+            color: var(--color-cream);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ANIMATED BACKGROUND PARTICLES */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.4), transparent);
+            border-radius: 50%;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .particle:nth-child(1) {
+            width: 10px;
+            height: 10px;
+            top: 10%;
+            left: 15%;
+            animation-delay: 0s;
+        }
+
+        .particle:nth-child(2) {
+            width: 15px;
+            height: 15px;
+            top: 50%;
+            left: 80%;
+            animation-delay: 3s;
+        }
+
+        .particle:nth-child(3) {
+            width: 8px;
+            height: 8px;
+            top: 70%;
+            left: 30%;
+            animation-delay: 6s;
+        }
+
+        .particle:nth-child(4) {
+            width: 12px;
+            height: 12px;
+            top: 30%;
+            left: 60%;
+            animation-delay: 9s;
+        }
+
+        .particle:nth-child(5) {
+            width: 6px;
+            height: 6px;
+            top: 85%;
+            left: 70%;
+            animation-delay: 12s;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.3;
+            }
+
+            25% {
+                transform: translate(40px, -60px) scale(1.3);
+                opacity: 0.6;
+            }
+
+            50% {
+                transform: translate(-30px, -120px) scale(0.9);
+                opacity: 0.4;
+            }
+
+            75% {
+                transform: translate(50px, -80px) scale(1.2);
+                opacity: 0.5;
+            }
+        }
+
+        /* HEADER */
+        .header {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 60px 20px 40px;
+            background: linear-gradient(180deg, rgba(30, 20, 15, 0.9), transparent);
+        }
+
+        .header h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 4rem;
+            color: var(--color-gold);
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.6);
+            margin-bottom: 15px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: #ccc;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* TIMELINE CONTAINER */
+        .timeline-container {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px 100px;
+            z-index: 5;
+        }
+
+        /* VERTICAL LINE */
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg,
+                    transparent,
+                    var(--color-gold) 10%,
+                    var(--color-gold) 90%,
+                    transparent);
+            transform: translateX(-50%);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+        }
+
+        /* TIMELINE ITEM */
+        .timeline-item {
+            position: relative;
+            margin-bottom: 120px;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: slideInView 0.8s ease-out forwards;
+        }
+
+        .timeline-item:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+
+        .timeline-item:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+
+        .timeline-item:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        .timeline-item:nth-child(4) {
+            animation-delay: 0.8s;
+        }
+
+        .timeline-item:nth-child(5) {
+            animation-delay: 1s;
+        }
+
+        .timeline-item:nth-child(6) {
+            animation-delay: 1.2s;
+        }
+
+        .timeline-item:nth-child(7) {
+            animation-delay: 1.4s;
+        }
+
+        @keyframes slideInView {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ALTERNATING LEFT/RIGHT */
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: auto;
+            margin-right: 0;
+            padding-left: 80px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: 0;
+            margin-right: auto;
+            padding-right: 80px;
+        }
+
+        /* DOT MARKER */
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1a0f0a, #3e2723);
+            border: 4px solid var(--color-gold);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.6);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--color-gold);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover .timeline-dot {
+            transform: translate(-50%, -50%) scale(1.3) rotate(360deg);
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.9);
+        }
+
+        /* CONTENT CARD */
+        .timeline-content {
+            width: 50%;
+            background: linear-gradient(145deg, rgba(44, 24, 16, 0.95), rgba(30, 20, 15, 0.9));
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+        }
+
+        .timeline-content:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+            border-color: var(--color-gold);
+        }
+
+        /* ERA BADGE */
+        .era-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid var(--color-gold);
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            color: var(--color-gold);
+        }
+
+        .timeline-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--color-gold);
+            text-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+        }
+
+        .timeline-description {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #e0e0e0;
+            margin-bottom: 20px;
+        }
+
+        /* KEY EVENTS */
+        .key-events {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .key-events h4 {
+            font-size: 0.9rem;
+            color: var(--color-gold);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .key-events ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .key-events li {
+            padding: 8px 0 8px 25px;
+            position: relative;
+            font-size: 0.9rem;
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        .key-events li::before {
+            content: '◆';
+            position: absolute;
+            left: 0;
+            color: var(--color-gold);
+            font-size: 0.7rem;
+        }
+
+        /* FUN FACTS */
+        .fun-fact {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(212, 175, 55, 0.1);
+            border-left: 3px solid var(--color-gold);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #f5f5dc;
+            font-style: italic;
+        }
+
+        .fun-fact::before {
+            content: '💡 Қызықты факт: ';
+            font-weight: 700;
+            color: var(--color-gold);
+            font-style: normal;
+        }
+
+        /* BACK BUTTON */
+        .back-button {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            z-index: 1000;
+            background: rgba(30, 20, 15, 0.9);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--color-gold);
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .back-button:hover {
+            background: var(--color-gold);
+            color: #1a0f0a;
+            border-color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.5);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .header {
+                padding: 40px 15px 30px;
+            }
+
+            .header h1 {
+                font-size: 2rem !important;
+            }
+
+            .header p {
+                font-size: 0.95rem;
+                line-height: 1.6;
+            }
+
+            .congrats-banner {
+                padding: 40px 15px;
+            }
+
+            .congrats-banner h2 {
+                font-size: 1.8rem !important;
+            }
+
+            .trophy-icon {
+                font-size: 3.5rem;
+            }
+
+            .timeline-line {
+                left: 20px;
+            }
+
+            .timeline-dot {
+                left: 20px;
+                width: 32px;
+                height: 32px;
+                font-size: 1rem;
+            }
+
+            .timeline-item:nth-child(odd) .timeline-content,
+            .timeline-item:nth-child(even) .timeline-content {
+                width: calc(100% - 60px);
+                margin-left: 50px !important;
+                margin-right: 0 !important;
+                padding: 20px;
+            }
+
+            .timeline-title {
+                font-size: 1.3rem !important;
+            }
+
+            .timeline-description {
+                font-size: 0.9rem;
+            }
+
+            .back-button {
+                position: absolute;
+                top: 15px;
+                left: 10px;
+                padding: 8px 15px;
+                font-size: 0.75rem;
+            }
+
+            .era-badge {
+                font-size: 0.75rem;
+                padding: 5px 15px;
+            }
+        }
+
+        /* COLOR VARIATIONS FOR EACH ERA */
+        .era-1 .timeline-dot {
+            border-color: var(--lvl-stone);
+            color: var(--lvl-stone);
+        }
+
+        .era-1 .era-badge,
+        .era-1 .timeline-title {
+            color: var(--lvl-stone);
+        }
+
+        .era-2 .timeline-dot {
+            border-color: var(--lvl-bronze);
+            color: var(--lvl-bronze);
+        }
+
+        .era-2 .era-badge,
+        .era-2 .timeline-title {
+            color: var(--lvl-bronze);
+        }
+
+        .era-3 .timeline-dot {
+            border-color: #A1887F;
+            color: #A1887F;
+        }
+
+        .era-3 .era-badge,
+        .era-3 .timeline-title {
+            color: #A1887F;
+        }
+
+        .era-4 .timeline-dot {
+            border-color: var(--lvl-turk);
+            color: var(--lvl-turk);
+        }
+
+        .era-4 .era-badge,
+        .era-4 .timeline-title {
+            color: var(--lvl-turk);
+        }
+
+        .era-5 .timeline-dot {
+            border-color: var(--lvl-khan);
+            color: var(--lvl-khan);
+        }
+
+        .era-5 .era-badge,
+        .era-5 .timeline-title {
+            color: var(--lvl-khan);
+        }
+
+        .era-6 .timeline-dot {
+            border-color: #E57373;
+            color: #E57373;
+        }
+
+        .era-6 .era-badge,
+        .era-6 .timeline-title {
+            color: #E57373;
+        }
+
+        .era-7 .timeline-dot {
+            border-color: var(--lvl-kz);
+            color: var(--lvl-kz);
+        }
+
+        .era-7 .era-badge,
+        .era-7 .timeline-title {
+            color: var(--lvl-kz);
+        }
+
+        /* CONGRATULATIONS BANNER */
+        .congrats-banner {
+            position: relative;
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05));
+            border-top: 2px solid var(--color-gold);
+            border-bottom: 2px solid var(--color-gold);
+            margin-bottom: 60px;
+            z-index: 5;
+        }
+
+        .congrats-banner h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            color: var(--color-gold);
+            margin-bottom: 20px;
+            text-shadow: 0 0 40px rgba(212, 175, 55, 0.8);
+            animation: pulse 2s infinite;
+        }
+
+        .congrats-banner p {
+            font-size: 1.3rem;
+            color: #e0e0e0;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .trophy-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ANIMATED BACKGROUND -->
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- BACK BUTTON -->
+    <a href="game.html" class="back-button">
+        <span>🏠</span> Картаға қайту
+    </a>
+
+    <!-- HEADER -->
+    <div class="header">
+        <h1>🏛️ Тарихи Хронология</h1>
+        <p>Қазақстанның 7 ұлы дәуірін зерттеп, тарихтың тамаша жолын аяқтадыңыз!<br>
+            Міне, сіз өткен тарихи кезеңдердің толық шолуы.</p>
+    </div>
+
+    <!-- CONGRATULATIONS BANNER -->
+    <div class="congrats-banner">
+        <div class="trophy-icon">🏆</div>
+        <h2>Құттықтаймыз!</h2>
+        <p>Сіз барлық 7 дәуірді сәтті аяқтадыңыз және Қазақстан тарихының шынайы білгіріне айналдыңыз!<br>
+            Бұл жетістік сіздің білімге деген құштарлығыңыз бен табандылығыңыздың айғағы.</p>
+    </div>
+
+    <!-- TIMELINE -->
+    <div class="timeline-container">
+        <div class="timeline-line"></div>
+
+        <!-- ERA 1: STONE AGE -->
+        <div class="timeline-item era-1">
+            <div class="timeline-dot">1</div>
+            <div class="timeline-content">
+                <span class="era-badge">Б.з.д. 1 млн - 5 мың жыл</span>
+                <h2 class="timeline-title">Алғашқы Қоғам</h2>
+                <p class="timeline-description">
+                    Тас дәуірі - адамзат тарихының бастауы. Қазақстан жерінде алғашқы адамдар пайда болып,
+                    тірі қалу үшін табиғатпен күресті. Олар тасты өңдеп құралдар жасады, отты пайдалануды үйренді.
+                </p>
+                <div class="key-events">
+                    <h4>Негізгі оқиғалар:</h4>
+                    <ul>
+                        <li>Алғашқы тас құралдардың пайда болуы</li>
+                        <li>Оттың игерілуі - өркениеттің бастауы</li>
+                        <li>Аңшылық пен жинаушылық дәуірі</li>
+                        <li>Тұрақты қоныстардың қалыптасуы</li>
+                    </ul>
+                </div>
+                <div class="fun-fact">
+                    Қазақстан жерінен табылған ең көне тас құралдардың жасы 1 миллион жылдан асады!
+                </div>
+            </div>
+        </div>
+
+        <!-- ERA 2: BRONZE AGE -->
+        <div class="timeline-item era-2">
+            <div class="timeline-dot">2</div>
+            <div class="timeline-content">
+                <span class="era-badge">Б.з.д. 3000 - 1000 жыл</span>
+                <h2 class="timeline-title">Қола және Ерте Көшпелілер</h2>
+                <p class="timeline-description">
+                    Металды өңдеу дәуірі басталды. Адамдар қоланы балқытып, қару-жарақ пен құралдар жасай бастады.
+                    Көшпелі мал шаруашылығы дамып, ұлы даланың өркениеті қалыптасты.
+                </p>
+                <div class="key-events">
+                    <h4>Негізгі оқиғалар:</h4>
+                    <ul>
+                        <li>Қола өңдеу технологиясының пайда болуы</li>
+                        <li>Андронов мәдениетінің гүлденуі</li>
+                        <li>Көшпелі мал шаруашылығының басталуы</li>
+                        <li>Алғашқы қорғандардың салынуы</li>
+                    </ul>
+                </div>
+                <div class="fun-fact">
+                    Қола дәуірінде жасалған бұйымдар қазіргі заманғы технологиямен де қайталау қиын!
+                </div>
+            </div>
+        </div>
+
+        <!-- ERA 3: IRON AGE -->
+        <div class="timeline-item era-3">
+            <div class="timeline-dot">3</div>
+            <div class="timeline-content">
+                <span class="era-badge">Б.з.д. 1000 - б.з. 1 жыл</span>
+                <h2 class="timeline-title">Ерте Темір Дәуірі</h2>
+                <p class="timeline-description">
+                    Сақтар мен Ғұндар дәуірі. Темір қаруларды игеріп, күшті әскери одақтар құрылды.
+                    Әйгілі "Алтын Адам" осы кезеңнің ұлы мұрасы.
+                </p>
+                <div class="key-events">
+                    <h4>Негізгі оқиғалар:</h4>
+                    <ul>
+                        <li>Сақ тайпаларының одағының құрылуы</li>
+                        <li>"Алтын Адам" - әлемдік мәдениет жәдігері</li>
+                        <li>Ғұн империясының күшеюі</li>
+                        <li>Ұлы Жібек жолының дамуы</li>
+                    </ul>
+                </div>
+                <div class="fun-fact">
+                    Сақ патшайымы Томирис Парсы патшасы Кирді жеңіп, тарихқа атын алтын әріптермен жазды!
+                </div>
+            </div>
+        </div>
+
+        <!-- ERA 4: TURKIC PERIOD -->
+        <div class="timeline-item era-4">
+            <div class="timeline-dot">4</div>
+            <div class="timeline-content">
+                <span class="era-badge">6-12 ғасырлар</span>
+                <h2 class="timeline-title">Түркі Дәуірі</h2>
+                <p class="timeline-description">
+                    Түркі қағанаттарының алтын заманы. Өз жазуы (руна), мемлекеттілігі және мәдениеті бар
+                    күшті империялар құрылды. Ұлы Жібек жолы арқылы Шығыс пен Батыс байланысты.
+                </p>
+                <div class="key-events">
+                    <h4>Негізгі оқиғалар:</h4>
+                    <ul>
+                        <li>Түркі қағанатының құрылуы (552 ж.)</li>
+                        <li>Руна жазуының пайда болуы</li>
+                        <li>Тас мүсіндердің орнатылуы</li>
+                        <li>Қарахан, Қимақ мемлекеттерінің гүлденуі</li>
+                    </ul>
+                </div>
+                <div class="fun-fact">
+                    Түркі руна жазуы - әлемдегі ең көне жазу жүйелерінің бірі, оны әлі де оқуға болады!
+                </div>
+            </div>
+        </div>
+
+        <!-- ERA 5: KAZAKH KHANATE -->
+        <div class="timeline-item era-5">
+            <div class="timeline-dot">5</div>
+            <div class="timeline-content">
+                <span class="era-badge">15-18 ғасырлар</span>
+                <h2 class="timeline-title">Қазақ Хандығы</h2>
+                <p class="timeline-description">
+                    Қазақ халқының мемлекеттілігінің негізі қаланды. Керей мен Жәнібек хандар 1465 жылы
+                    Қазақ хандығын құрды. Жеті Жарғы заңы қабылданып, ел біртұтас болды.
+                </p>
+                <div class="key-events">
+                    <h4>Негізгі оқиғалар:</h4>
+                    <ul>
+                        <li>Қазақ хандығының құрылуы (1465 ж.)</li>
+                        <li>Қасым ханның "Қасқа жолы" заңдары</li>
+                        <li>Тәуке ханның "Жеті Жарғысы"</li>
+                        <li>Үш жүздің біріктірілуі</li>
+                    </ul>
+                </div>
+                <div class="fun-fact">
+                    "Жеті Жарғы" - қазақтардың алғашқы жазбаша заңдар жинағы, әділеттілік пен теңдіктің негізі!
+                </div>
+            </div>
+        </div>
+
+        <!-- ERA 6: COLONIAL & SOVIET -->
+        <div class="timeline-item era-6">
+            <div class="timeline-dot">6</div>
+            <div class="timeline-content">
+                <span class="era-badge">18-20 ғасырлар</span>
+                <h2 class="timeline-title">Отарлау және Кеңестік Кезең</h2>
+                <p class="timeline-description">
+                    Қиын, бірақ маңызды кезең. Ресей империясының отарлауына қарсы ұлт-азаттық күрес.
+                    Кеңес дәуірінде индустрияландыру, білім мен ғылымның дамуы.
+                </p>
+                <div class="key-events">
+                    <h4>Негізгі оқиғалар:</h4>
+                    <ul>
+                        <li>Кенесары Қасымұлының бас көтеруі</li>
+                        <li>Алаш Орда автономиясының құрылуы (1917)</li>
+                        <li>Қазақ КСР-нің құрылуы (1936)</li>
+                        <li>Ұлы Отан соғысындағы ерлік</li>
+                    </ul>
+                </div>
+                <div class="fun-fact">
+                    Алаш қайраткерлері қазақ халқының тәуелсіздігі үшін алғашқылардың бірі болып күресті!
+                </div>
+            </div>
+        </div>
+
+        <!-- ERA 7: INDEPENDENT KAZAKHSTAN -->
+        <div class="timeline-item era-7">
+            <div class="timeline-dot">7</div>
+            <div class="timeline-content">
+                <span class="era-badge">1991 - қазіргі кезең</span>
+                <h2 class="timeline-title">Тәуелсіз Қазақстан</h2>
+                <p class="timeline-description">
+                    1991 жылы 16 желтоқсанда Қазақстан тәуелсіздік алды. Жаңа мемлекет құрылып,
+                    экономика, білім, мәдениет дамыды. Астана - жаңа астана қаласы салынды.
+                </p>
+                <div class="key-events">
+                    <h4>Негізгі оқиғалар:</h4>
+                    <ul>
+                        <li>Тәуелсіздік алу (16 желтоқсан 1991)</li>
+                        <li>Ұлттық валюта - теңгенің енгізілуі</li>
+                        <li>Астананың құрылуы (1997)</li>
+                        <li>Халықаралық аренадағы беделдің өсуі</li>
+                    </ul>
+                </div>
+                <div class="fun-fact">
+                    Қазақстан - әлемдегі ең үлкен тәуелсіз мемлекеттердің бірі, 9-шы орында тұр!
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- FINAL MESSAGE -->
+    <div class="congrats-banner">
+        <h2>Тарих - біздің болашағымыздың кілті! 🔑</h2>
+        <p>Өткенді білмеген болашақты құра алмайды. Сіз Қазақстан тарихын зерттеп,
+            ұлттық мұраны сақтаушылардың қатарына қосылдыңыз!</p>
+    </div>
+
+</body>
+
+</html>

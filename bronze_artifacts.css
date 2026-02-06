@@ -1,0 +1,83 @@
+/* --- GAME 4: BRONZE ARTIFACTS --- */
+.artifacts-container {
+    padding: 20px;
+}
+
+.artifacts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+    max-width: 700px;
+    margin: 0 auto 30px;
+}
+
+.artifact-card {
+    background: linear-gradient(145deg, #3a2a1a, #2a1a0a);
+    border: 3px solid #8B4513;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.artifact-card:hover {
+    transform: translateY(-5px) scale(1.05);
+    border-color: #FFD700;
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+}
+
+.artifact-card.selected {
+    border-color: #4FC3F7;
+    background: linear-gradient(145deg, #2a4a5a, #1a3a4a);
+    box-shadow: 0 0 20px rgba(79, 195, 247, 0.6);
+}
+
+.artifact-card.correct {
+    border-color: #4CAF50;
+    background: linear-gradient(145deg, #2a4a2a, #1a3a1a);
+    animation: pulse-green 0.5s;
+}
+
+.artifact-card.wrong {
+    border-color: #e74c3c;
+    background: linear-gradient(145deg, #4a2a2a, #3a1a1a);
+    animation: shake 0.5s;
+}
+
+@keyframes pulse-green {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.artifact-icon {
+    font-size: 4rem;
+    margin-bottom: 15px;
+    filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.5));
+}
+
+.artifact-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #FFD700;
+    margin-bottom: 8px;
+}
+
+.artifact-use {
+    font-size: 0.9rem;
+    color: #aaa;
+}
+
+.artifact-status {
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+    border-radius: 15px;
+    border: 2px solid #8B4513;
+    font-size: 1.2rem;
+    color: #FFD700;
+    font-weight: 700;
+    max-width: 500px;
+    margin: 0 auto;
+}
