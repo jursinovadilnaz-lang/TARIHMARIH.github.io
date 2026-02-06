@@ -3901,12 +3901,16 @@
                     const target = document.elementFromPoint(touch.clientX, touch.clientY);
 
                     if (target) {
+                        // More robust target finding for nested elements (icons, text inside slots)
                         const zone = target.closest('.drop-zone') ||
                             target.closest('.hierarchy-slot') ||
                             target.closest('.logic-slot') ||
                             target.closest('.arch-slot') ||
                             target.closest('.petroglyph-symbol') ||
-                            target.closest('.petroglyph-meaning');
+                            target.closest('.petroglyph-meaning') ||
+                            target.closest('.season-slot') ||
+                            target.closest('.stair-step');
+
                         if (zone) {
                             zone.click();
                         }
