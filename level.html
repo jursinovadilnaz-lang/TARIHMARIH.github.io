@@ -279,6 +279,11 @@
                 gap: 10px !important;
             }
 
+            [draggable="true"] {
+                touch-action: none !important;
+                -webkit-user-drag: none !important;
+            }
+
             /* Chariot Builder Mobile */
             .chariot-container {
                 flex-direction: column !important;
@@ -3784,19 +3789,111 @@
         });
 
         // --- GLOBAL HELPERS & ANIMATIONS ---
-        let selectedPart = null; // { id, el, type }
+        let selectedPart = null;
+        let lastTouchTime = 0;
 
         window.clickSelectPart = (id, el) => {
+            if (Date.now() - lastTouchTime < 300) return;
             if (selectedPart && selectedPart.el) {
                 selectedPart.el.classList.remove('selected-item');
             }
-            if (selectedPart && selectedPart.id === id) {
+            if (selectedPart && selectedPart.el === el) {
                 selectedPart = null;
                 return;
             }
             selectedPart = { id, el };
             el.classList.add('selected-item');
         };
+
+        // --- UNIVERSAL TOUCH DRAG-AND-DROP POLYFILL ---
+        let activeDragEl = null;
+        let dragGhost = null;
+        let dragStartX = 0, dragStartY = 0;
+        let isActuallyDragging = false;
+
+        document.addEventListener('touchstart', (e) => {
+            const dragNode = e.target.closest('[draggable="true"]');
+            if (!dragNode) return;
+
+            activeDragEl = dragNode;
+            const touch = e.touches[0];
+            dragStartX = touch.clientX;
+            dragStartY = touch.clientY;
+            isActuallyDragging = false;
+        }, { passive: true });
+
+        document.addEventListener('touchmove', (e) => {
+            if (!activeDragEl) return;
+            const touch = e.touches[0];
+            const dx = touch.clientX - dragStartX;
+            const dy = touch.clientY - dragStartY;
+
+            if (!isActuallyDragging && (Math.abs(dx) > 10 || Math.abs(dy) > 10)) {
+                isActuallyDragging = true;
+                lastTouchTime = Date.now();
+
+                // Initialize selection for the part being dragged
+                const idParts = activeDragEl.id.split('-');
+                const itemId = idParts.slice(2).join('-');
+
+                // Deselect previous
+                if (selectedPart && selectedPart.el) selectedPart.el.classList.remove('selected-item');
+
+                selectedPart = { id: itemId, el: activeDragEl };
+                activeDragEl.classList.add('selected-item');
+
+                // Create ghost
+                dragGhost = activeDragEl.cloneNode(true);
+                const rect = activeDragEl.getBoundingClientRect();
+                dragGhost.style.position = 'fixed';
+                dragGhost.style.width = rect.width + 'px';
+                dragGhost.style.height = rect.height + 'px';
+                dragGhost.style.left = rect.left + 'px';
+                dragGhost.style.top = rect.top + 'px';
+                dragGhost.style.zIndex = '10000';
+                dragGhost.style.pointerEvents = 'none';
+                dragGhost.style.opacity = '0.7';
+                dragGhost.style.boxShadow = '0 10px 30px rgba(0,0,0,0.4)';
+                dragGhost.style.transform = 'scale(1.1)';
+                dragGhost.style.transition = 'none';
+                document.body.appendChild(dragGhost);
+
+                activeDragEl.style.opacity = '0.3';
+            }
+
+            if (isActuallyDragging && dragGhost) {
+                if (e.cancelable) e.preventDefault();
+                dragGhost.style.left = (touch.clientX - dragGhost.offsetWidth / 2) + 'px';
+                dragGhost.style.top = (touch.clientY - dragGhost.offsetHeight / 2) + 'px';
+            }
+        }, { passive: false });
+
+        document.addEventListener('touchend', (e) => {
+            if (!activeDragEl) return;
+
+            if (isActuallyDragging) {
+                lastTouchTime = Date.now();
+                const touch = e.changedTouches[0];
+                if (dragGhost) {
+                    dragGhost.style.display = 'none';
+                    const target = document.elementFromPoint(touch.clientX, touch.clientY);
+
+                    if (target) {
+                        const zone = target.closest('.drop-zone') ||
+                            target.closest('.hierarchy-slot') ||
+                            target.closest('.logic-slot') ||
+                            target.closest('.arch-slot');
+                        if (zone) zone.click();
+                    }
+                    dragGhost.remove();
+                    dragGhost = null;
+                }
+                activeDragEl.style.opacity = '1';
+            }
+
+            activeDragEl = null;
+            isActuallyDragging = false;
+        }, { passive: false });
 
         window.clickDropChariot = (idx, slot) => {
             if (!selectedPart) return;
