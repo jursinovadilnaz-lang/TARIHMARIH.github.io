@@ -1536,15 +1536,15 @@
                 setTimeout(() => {
                     if (finalActions) finalActions.scrollIntoView({ behavior: 'smooth' });
                 }, 500);
-            }
 
-            // Show completion modal only once
-            const hasSeenCompletion = localStorage.getItem('tarx_completion_shown');
-            if (!hasSeenCompletion) {
-                setTimeout(() => {
-                    showCompletionModal();
-                    localStorage.setItem('tarx_completion_shown', 'true');
-                }, 1000);
+                // Show completion modal only once
+                const hasSeenCompletion = localStorage.getItem('tarx_completion_shown');
+                if (!hasSeenCompletion) {
+                    setTimeout(() => {
+                        showCompletionModal();
+                        localStorage.setItem('tarx_completion_shown', 'true');
+                    }, 1000);
+                }
             }
         }
 
